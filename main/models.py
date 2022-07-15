@@ -7,35 +7,33 @@ class Users(db.Model):
     email = db.Column(db.String(100))
     age = db.Column(db.Integer)
     password_digest = db.Column(db.String(10000))
-
-    # Preferences = db.Column(db.String(100))
+    preferences = db.Column(db.String(100))
     # # (user_id)
-    # LikedBy = db.Column(db.String(100))
+    likedby = db.Column(db.String(100))
     #   # (user_id)
-    # Matches = db.Column(db.String(100))
+    matches = db.Column(db.String(100))
     #   # (user_id)
-    # Events = db.Column(db.String(100))
+    events = db.Column(db.String(100))
     # # (event_id)
-    # Rejected_Events = db.Column(db.String(100))
-
-    # rating = db.Column(db.String(100))
+    rejected_events = db.Column(db.String(100))
+    rating = db.Column(db.String(100))
     #   #     Ratings - Array(Int)
-    # Chats = db.Column(db.String(100))
+    chats = db.Column(db.String(100))
     # # chat_id
   
 
-    def __init__(self, name, email, age, password_digest, Preferences, LikedBy,  Matches, Events, Rejected_Events, rating, Chats):
+    def __init__(self, name, email, age, password_digest, preferences, likedby,  matches, events, rejected_events, rating, chats):
         self.name = name
         self.email = email
         self.age = age
         self.password_digest = password_digest
         self.rating = rating
-        # self.Preferences = Preferences
-        # self.LikedBy = LikedBy 
-        # self.Matches = Matches
-        # self.Events = Events
-        # self.Rejected_Events = Rejected_Events
-        # self.Chats = Chats
+        self.preferences = preferences
+        self.likedby = likedby 
+        self.matches = matches
+        self.events = events
+        self.rejected_events = rejected_events
+        self.chats = chats
     
     def __repr__(self):
         return '<id {}>'.format(self.user_id)
@@ -48,12 +46,12 @@ class Users(db.Model):
             'age': self.age,
             'password_digest': self.password_digest,
             'rating': self.rating,
-            # 'Preferences': self.Preferences,
-            # 'LikedBy': self.LikedBy,
-            # 'Matches': self.Matches,
-            # 'Events': self.Events,
-            # 'Rejected_Events': self.Rejected_Events,
-            # 'Chats': self.Chats
+            'preferences': self.preferences,
+            'likedby': self.likedby,
+            'matches': self.matches,
+            'events': self.events,
+            'rejected_events': self.rejected_events,
+            'chats': self.chats
         }
 
 

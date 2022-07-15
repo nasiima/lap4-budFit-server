@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify
+from flask import Flask, Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug import exceptions
@@ -41,9 +41,28 @@ def getAllUsers():
 
 
 # get  user by id
-@main.get('/users/<int:user_id>/')
-def getUserById():
-    return 'user by id'
+@main.route('/users/<int:user_id>/', methods=['GET', 'DELETE'])
+def getUserById(user_id):
+    if request.method == 'GET':
+        try: 
+            user = Users.query.get_or_404(user_id)
+            return  jsonify([user.serialize()])
+        except exceptions.NotFound:
+            raise exceptions.NotFound("User not found!")
+        except:
+            raise exceptions.InternalServerError()
+    elif request.method == 'DELETE':
+        try: 
+            user = Users.query.get_or_404(user_id)
+            
+            db.session.delete(user)
+            db.session.commit()
+            return f"User was sucessfully deleted!", 204
+        except exceptions.NotFound:
+            raise exceptions.NotFound("User not found!")
+        except:
+            raise exceptions.InternalServerError()
+    # return 'user by id'
 
 
 # get chat 
