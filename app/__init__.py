@@ -1,6 +1,10 @@
+
 from flask import Flask, current_app
+
 from .extensions import db
-from .app import main
+from .main.app import main
+from .auth.auth import auth
+
 
 
 
@@ -12,5 +16,7 @@ def create_app(config_file='settings.py'):
     db.init_app(app)
 
     app.register_blueprint(main)
+    app.register_blueprint(auth)
 
     return app
+

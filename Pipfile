@@ -5,18 +5,22 @@ name = "pypi"
 
 [packages]
 flask = "*"
-gunicorn = "*"
-cors = "*"
-werkzeug = "*"
-flask-sqlalchemy = "*"
+flask-cors = "*"
 flask-login = "*"
-flask-bcrypt = "*"
+werkzeug = "*"
+gunicorn = "*"
+flask-socketio = "*"
+flask-sqlalchemy = "*"
+psycopg2-binary = "*"
+python-dotenv = "*"
+simple-websocket = "*"
+pyjwt = "*"
+
+
 pytest = "*"
 pytest-cov = "*"
-python-dotenv = "*"
-psycopg2 = "*"
-coverage = "*"
-flask-cors = "*"
+pytest-flask-sqlalchemy = "*"
+gevent = "*"
 
 [dev-packages]
 

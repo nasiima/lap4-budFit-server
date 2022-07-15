@@ -1,4 +1,6 @@
 from .extensions import db 
+import jwt
+import datetime
 
 
 class Users(db.Model):
@@ -56,6 +58,44 @@ class Users(db.Model):
             'rejected_events': self.rejected_events,
             'chats': self.chats
         }
+        
+    def encode_auth_token(self, username):
+        """
+        Generates the Auth Token
+        :return: string
+        """
+        try:
+            payload = {
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),
+                'iat': datetime.datetime.utcnow(),
+                'sub': username
+            }
+            return jwt.encode(
+                payload,
+                os.environ.get('SECRET_KEY'),
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e
+
+    @staticmethod
+    def decode_auth_token(auth_token):
+        """
+        Decodes the auth token
+        :param auth_token:
+        :return: integer|string
+        """
+        try:
+            payload = jwt.decode(auth_token, os.environ.get('SECRET_KEY'))
+            return payload['sub']
+        except jwt.ExpiredSignatureError:
+            return 'Signature expired. Please log in again.'
+        except jwt.InvalidTokenError:
+            return 'Invalid token. Please log in again.'
+
+
+
+
 
 
 
