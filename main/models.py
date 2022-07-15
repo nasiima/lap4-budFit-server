@@ -48,10 +48,61 @@ class Users(db.Model):
             'age': self.age,
             'password_digest': self.password_digest,
             'rating': self.rating,
-            'Preferences': self.Preferences,
-            'LikedBy': self.LikedBy,
-            'Matches': self.Matches,
-            'Events': self.Events,
-            'Rejected_Events': self.Rejected_Events,
-            'Chats': self.Chats
+            # 'Preferences': self.Preferences,
+            # 'LikedBy': self.LikedBy,
+            # 'Matches': self.Matches,
+            # 'Events': self.Events,
+            # 'Rejected_Events': self.Rejected_Events,
+            # 'Chats': self.Chats
         }
+
+
+
+class Events(db.Model):
+    event_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    activity = db.Column(db.String(64))
+    desc = db.Column(db.String(100))
+    location = db.Column(db.String(64))
+    Spaces = db.Column(db.Integer)
+    Age = db.Column(db.Integer)
+    Pic = db.Column(db.String(64))
+    SkillLevel = db.Column(db.String(64))
+    Time = db.Column(db.String(64))
+    LookingFor = db.Column(db.String(64))
+    partysize = db.Column(db.String(64))
+
+
+
+    def __init__(self,  user_id, activity, desc, location, Spaces, Age, Pic, SkillLevel, Time, LookingFor, partysize ):
+        self.user_id = user_id
+        self.activity = activity
+        self.desc = desc
+        self.location = location
+        self.Spaces = Spaces 
+        self.Age = Age
+        self.Pic = Pic
+        self.SkillLevel = SkillLevel
+        self.Time = Time
+        self.LookingFor = LookingFor
+        self.partysize = partysize
+    
+    def __repr__(self):
+        return '<id {}>'.format(self.event_id)
+    
+    def serialize(self):
+        return {
+       'user_id': self.user_id,
+       'event_id': self.event_id,
+       'activity': self.activity,
+       'desc': self.desc,
+       'location': self.location,
+       'Spaces': self.Spaces,
+       'Age': self.Age,
+       'Pic': self.Pic,
+       'SkillLevel': self.SkillLevel,
+       'Time': self.Time,
+       'LookingFor': self.LookingFor,
+       'partysize': self.partysize 
+        }
+
