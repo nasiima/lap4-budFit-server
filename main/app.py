@@ -40,6 +40,26 @@ def getAllUsers():
 
 
 
+# get  user by id
+@main.get('/users/<int:user_id>/')
+def getUserById():
+    return 'user by id'
+
+
+# get chat 
+@main.route('/chat', methods=['GET','POST'])
+def getAllChats():
+    return 'chats'
+
+# get all events 
+@main.route('/events', methods=['GET','POST'])
+def getAllEvents():
+    return 'events'
+
+# get all events 
+@main.route('/chat/<int:event_id>/')
+def getEventsId():
+    return 'events'
 
 
 
