@@ -14,9 +14,9 @@ flask-bcrypt = "*"
 pytest = "*"
 pytest-cov = "*"
 python-dotenv = "*"
-psycopg2 = "*"
 coverage = "*"
 flask-cors = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
