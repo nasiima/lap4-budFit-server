@@ -4,6 +4,7 @@ from .extensions import db
 class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
+    username = db.Column(db.String(100))
     email = db.Column(db.String(100))
     age = db.Column(db.Integer)
     password_digest = db.Column(db.String(10000))
@@ -22,8 +23,9 @@ class Users(db.Model):
     # # chat_id
   
 
-    def __init__(self, name, email, age, password_digest, preferences, likedby,  matches, events, rejected_events, rating, chats):
+    def __init__(self, name, username, email, age, password_digest, preferences, likedby,  matches, events, rejected_events, rating, chats):
         self.name = name
+        self.username = username
         self.email = email
         self.age = age
         self.password_digest = password_digest
@@ -42,6 +44,7 @@ class Users(db.Model):
         return {
             'user_id': self.user_id,
             'name': self.name, 
+            'username': self.username, 
             'email': self.email,
             'age': self.age,
             'password_digest': self.password_digest,

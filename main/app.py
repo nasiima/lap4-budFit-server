@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug import exceptions
 from .models import   Users
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 main = Blueprint('main', __name__) 
@@ -75,7 +76,7 @@ def getAllChats():
 def getAllEvents():
     return 'events'
 
-# get all events 
+# get  events by id
 @main.route('/chat/<int:event_id>/')
 def getEventsId():
     return 'events'
