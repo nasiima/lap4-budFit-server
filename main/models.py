@@ -106,29 +106,21 @@ class Events(db.Model):
        'partysize': self.partysize 
         }
 
-
-class Messages(db.Model):
-    Messages_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    comment = db.Column(db.String(140))
-    timestamp = db.Column(db.String(64))
+class Chat(db.Model):
+    chat_id = db.Column(db.Integer, primary_key=True)
+    messages = db.Column(db.Integer, db.ForeignKey('message.id'))
 
 
-    def __init__(self, Messages_id, sender_id, comment, timestamp):
-        self.Messages_id = Messages_id
-        self.sender_id = sender_id
-        self.comment = comment
-        self.timestamp = timestamp
+    def __init__(self, chat_id, messages):
+        self.chat_id = chat_id
+        self.messages = messages
 
     def __repr__(self):
-        return '<id {}>'.format(self.Messages_id)
+        return '<id {}>'.format(self.chat_id)
     
     def serialize(self):
         return {
-            'Messages_id': self.Messages_id,
-            'sender_id': self.sender_id,
-            'comment': self.comment, 
-            'timestamp': self.timestamp
+            'chat_id': self.chat_id, 
+            'messages': self.messages
         }
-
 
