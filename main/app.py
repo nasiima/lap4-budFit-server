@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug import exceptions
@@ -13,14 +13,35 @@ CORS(main)
 # CORS(app)
 
 
+
 @main.route("/")
 def hello():
     return "Hello World!"
 
+
+# login route
+@main.route("/auth/login")
+def login():
+    return "Hello from login!"
+
+
+# registration route
+@main.route("/auth/register")
+def register():
+    return "Hello from register!"
+
+
+
+# get all users route
 @main.route('/users', methods=['GET'])
 def getAllUsers():
     allUsers = Users.query.all()
     return  jsonify([e.serialize() for e in allUsers])
+
+
+
+
+
 
 
 

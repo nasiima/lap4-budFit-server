@@ -8,20 +8,20 @@ class Users(db.Model):
     age = db.Column(db.Integer)
     password_digest = db.Column(db.String(10000))
 
-    Preferences = db.Column(db.String(100))
-    # (user_id)
-    LikedBy = db.Column(db.String(100))
-      # (user_id)
-    Matches = db.Column(db.String(100))
-      # (user_id)
-    Events = db.Column(db.String(100))
-    # (event_id)
-    Rejected_Events = db.Column(db.String(100))
+    # Preferences = db.Column(db.String(100))
+    # # (user_id)
+    # LikedBy = db.Column(db.String(100))
+    #   # (user_id)
+    # Matches = db.Column(db.String(100))
+    #   # (user_id)
+    # Events = db.Column(db.String(100))
+    # # (event_id)
+    # Rejected_Events = db.Column(db.String(100))
 
-    rating = db.Column(db.String(100))
-      #     Ratings - Array(Int)
-    Chats = db.Column(db.String(100))
-    # chat_id
+    # rating = db.Column(db.String(100))
+    #   #     Ratings - Array(Int)
+    # Chats = db.Column(db.String(100))
+    # # chat_id
   
 
     def __init__(self, name, email, age, password_digest, Preferences, LikedBy,  Matches, Events, Rejected_Events, rating, Chats):
@@ -30,12 +30,12 @@ class Users(db.Model):
         self.age = age
         self.password_digest = password_digest
         self.rating = rating
-        self.Preferences = Preferences
-        self.LikedBy = LikedBy 
-        self.Matches = Matches
-        self.Events = Events
-        self.Rejected_Events = Rejected_Events
-        self.Chats = Chats
+        # self.Preferences = Preferences
+        # self.LikedBy = LikedBy 
+        # self.Matches = Matches
+        # self.Events = Events
+        # self.Rejected_Events = Rejected_Events
+        # self.Chats = Chats
     
     def __repr__(self):
         return '<id {}>'.format(self.user_id)
