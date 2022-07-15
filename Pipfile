@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+gunicorn = "*"
+cors = "*"
+werkzeug = "*"
+flask-sqlalchemy = "*"
+flask-login = "*"
+flask-bcrypt = "*"
+pytest = "*"
+pytest-cov = "*"
+python-dotenv = "*"
+psycopg2 = "*"
+coverage = "*"
+flask-cors = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
+
+[scripts]
+dev = "bash -c \"export FLASK_ENV='development' && flask run\""
+test = "pytest ."
+start = "gunicorn app:app"
