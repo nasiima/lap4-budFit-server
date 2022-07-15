@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS users; CREATE TABLE users ( user_id serial PRIMARY KEY, name varchar(100), email varchar(100), password_digest varchar(1000), rating int, Preferences varchar(100), LikedBy varchar(100), Matches varchar(100), Events varchar(100), Chats varchar(140) );
+
+INSERT INTO users (name, email, password_digest, rating, Preferences, LikedBy, Matches, Events, Chats ) VALUES ('test', 'test@test.com', 'test', 4, 'testsport', 'testlike', 'testmatche', 'testevent', 'testchat');
