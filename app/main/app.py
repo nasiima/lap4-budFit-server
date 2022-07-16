@@ -119,25 +119,16 @@ def updateUser(user_id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # get chat 
 @main.route('/chat', methods=['GET','POST'])
 def getAllChats():
     return 'chats'
+
+
+@main.errorhandler(exceptions.NotFound)
+def handle_404(err):
+    return {'message': f'Oops! {err}'}, 404
+
 
 
 
