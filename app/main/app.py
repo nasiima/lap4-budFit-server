@@ -136,6 +136,13 @@ def handle_400(err):
 
 
 
+@main.errorhandler(exceptions.InternalServerError)
+def handle_500(err):
+    return {'message': f"It's not you, it's us"}, 500
+
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
