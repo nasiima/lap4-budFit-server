@@ -12,7 +12,7 @@ CORS(auth)
 
 
 # Login route
-@auth.route("/auth/login", methods=["POST"])
+@auth.route("/auth/login", methods=["POST", "GET"])
 def login():
     if request.method=="POST":
         try:
@@ -42,6 +42,15 @@ def login():
                 }
                 return jsonify(response), 200
             
+        #     if request.method == 'GET':
+                
+        #         return {
+        #     "id": user.id,
+        #     "name": user.username,
+        #     "preferences": user.preferences
+        # }
+            
+            
         except exceptions.BadRequest:
 
             raise exceptions.BadRequest()
@@ -53,11 +62,14 @@ def login():
 # Registration route
 @auth.route("/auth/register", methods=["POST"])
 def register():
+
     if request.method=="POST":
         try:
             req = request.get_json()
             username = req['username']
             password = req['password']
+            email = req['email']
+            name = req['name']
             
             user = Users.query.filter_by(username=username).first()
             if user!=None:
@@ -68,7 +80,7 @@ def register():
                 name = req['name'],
                 username = req['username'],
                 email = req['email'], 
-                age = req['age'],
+                age = 0,
                 password_digest = hash,
                 rating = 0,
                 preferences = '',

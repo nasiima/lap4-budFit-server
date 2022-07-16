@@ -1,7 +1,6 @@
 import json
 from unittest import mock
-import werkzeug.security as security
-import pytest
+
 
 
 def test_register(api):

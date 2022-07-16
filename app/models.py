@@ -95,37 +95,32 @@ class Users(db.Model):
 
 
 
-
-
-
-
 class Events(db.Model):
     event_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     activity = db.Column(db.String(64))
-    desc = db.Column(db.String(100))
+    descr = db.Column(db.String(100))
     location = db.Column(db.String(64))
-    Spaces = db.Column(db.Integer)
-    Age = db.Column(db.Integer)
-    Pic = db.Column(db.String(64))
-    SkillLevel = db.Column(db.String(64))
-    Time = db.Column(db.String(64))
-    LookingFor = db.Column(db.String(64))
+    spaces = db.Column(db.Integer)
+    age = db.Column(db.Integer)
+    pic = db.Column(db.String(64))
+    skilllevel = db.Column(db.String(64))
+    time = db.Column(db.String(64))
+    lookingfor = db.Column(db.String(64))
     partysize = db.Column(db.String(64))
 
-
-
-    def __init__(self,  user_id, activity, desc, location, Spaces, Age, Pic, SkillLevel, Time, LookingFor, partysize ):
-        self.user_id = user_id
+    # def __init__(self,  user_id, activity, descr, location, spaces, age, pic, skilllevel, time, lookingfor, partysize ):
+    def __init__(self, activity, descr, location, spaces, age, pic, skilllevel, time, lookingfor, partysize ):
+        # self.user_id = user_id
         self.activity = activity
-        self.desc = desc
+        self.descr = descr
         self.location = location
-        self.Spaces = Spaces 
-        self.Age = Age
-        self.Pic = Pic
-        self.SkillLevel = SkillLevel
-        self.Time = Time
-        self.LookingFor = LookingFor
+        self.spaces = spaces 
+        self.age = age
+        self.pic = pic
+        self.skilllevel = skilllevel
+        self.time = time
+        self.lookingfor = lookingfor
         self.partysize = partysize
     
     def __repr__(self):
@@ -133,19 +128,23 @@ class Events(db.Model):
     
     def serialize(self):
         return {
-       'user_id': self.user_id,
+    #    'user_id': self.user_id,
        'event_id': self.event_id,
        'activity': self.activity,
-       'desc': self.desc,
+       'descr': self.descr,
        'location': self.location,
-       'Spaces': self.Spaces,
-       'Age': self.Age,
-       'Pic': self.Pic,
-       'SkillLevel': self.SkillLevel,
-       'Time': self.Time,
-       'LookingFor': self.LookingFor,
+       'spaces': self.spaces,
+       'age': self.age,
+       'pic': self.pic,
+       'skilllevel': self.skilllevel,
+       'time': self.time,
+       'lookingfor': self.lookingfor,
        'partysize': self.partysize 
         }
+
+
+
+
 
 class Chat(db.Model):
     chat_id = db.Column(db.Integer, primary_key=True)
