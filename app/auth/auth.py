@@ -12,7 +12,7 @@ CORS(auth)
 
 
 # Login route
-@auth.route("/auth/login", methods=["POST", "GET"])
+@auth.route("/auth/login", methods=["POST"])
 def login():
     if request.method=="POST":
         try:
