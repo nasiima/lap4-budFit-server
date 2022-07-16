@@ -97,9 +97,9 @@ class Users(db.Model):
 
 class Events(db.Model):
     event_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     activity = db.Column(db.String(64))
-    desc = db.Column(db.String(100))
+    descr = db.Column(db.String(100))
     location = db.Column(db.String(64))
     spaces = db.Column(db.Integer)
     age = db.Column(db.Integer)
@@ -109,15 +109,16 @@ class Events(db.Model):
     lookingfor = db.Column(db.String(64))
     partysize = db.Column(db.String(64))
 
-    def __init__(self,  user_id, activity, desc, location, spaces, age, pic, skilllevel, time, lookingfor, partysize ):
-        self.user_id = user_id
+    # def __init__(self,  user_id, activity, descr, location, spaces, age, pic, skilllevel, time, lookingfor, partysize ):
+    def __init__(self, activity, descr, location, spaces, age, pic, skilllevel, time, lookingfor, partysize ):
+        # self.user_id = user_id
         self.activity = activity
-        self.desc = desc
+        self.descr = descr
         self.location = location
         self.spaces = spaces 
         self.age = age
         self.pic = pic
-        self.skillLevel = skillLevel
+        self.skilllevel = skilllevel
         self.time = time
         self.lookingfor = lookingfor
         self.partysize = partysize
@@ -127,15 +128,15 @@ class Events(db.Model):
     
     def serialize(self):
         return {
-       'user_id': self.user_id,
+    #    'user_id': self.user_id,
        'event_id': self.event_id,
        'activity': self.activity,
-       'desc': self.desc,
+       'descr': self.descr,
        'location': self.location,
        'spaces': self.spaces,
        'age': self.age,
        'pic': self.pic,
-       'skillLevel': self.skillLevel,
+       'skilllevel': self.skilllevel,
        'time': self.time,
        'lookingfor': self.lookingfor,
        'partysize': self.partysize 
