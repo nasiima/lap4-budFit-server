@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug import exceptions
 from app.models import   Users, Events
-from werkzeug.security import generate_password_hash, check_password_hash
 from app.extensions import db
 
 main = Blueprint('main', __name__) 
@@ -20,7 +19,6 @@ def hello():
 def getAllUsers():
     allUsers = Users.query.all()
     return  jsonify([e.serialize() for e in allUsers])
-
 
 
 # get  user by id
@@ -55,6 +53,28 @@ def getAllEvents():
     return  jsonify([e.serialize() for e in allEvents])
 
 
+# get  events by id
+@main.route('/events/<int:event_id>/',  methods=['GET', 'DELETE', 'PATCH'])
+def getEventsId(event_id):
+    if request.method == 'GET':
+        try: 
+            event = Events.query.get_or_404(event_id)
+            return  jsonify([event.serialize()])
+        except exceptions.NotFound:
+            raise exceptions.NotFound("Event not found!")
+        except:
+            raise exceptions.InternalServerError()
+    elif request.method == 'DELETE':
+        try: 
+            event = Events.query.get_or_404(event_id)
+            db.session.delete(event)
+            db.session.commit()
+            return f"Event was sucessfully deleted!", 204
+        except exceptions.NotFound:
+            raise exceptions.NotFound("Event not found!")
+        except:
+            raise exceptions.InternalServerError()
+    
 
 
 # get chat 
@@ -62,11 +82,6 @@ def getAllEvents():
 def getAllChats():
     return 'chats'
 
-
-# get  events by id
-@main.route('/chat/<int:chat_id>/')
-def getEventsId():
-    return 'events'
 
 
 
