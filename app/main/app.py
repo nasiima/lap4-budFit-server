@@ -130,7 +130,9 @@ def handle_404(err):
     return {'message': f'Oops! {err}'}, 404
 
 
-
+@main.errorhandler(exceptions.BadRequest)
+def handle_400(err):
+    return {'message': f'Oops! {err}'}, 400
 
 
 
