@@ -22,7 +22,7 @@ def getAllUsers():
 
 
 # get  user by id
-@main.route('/users/<int:user_id>/', methods=['GET', 'DELETE', 'PATCH'])
+@main.route('/users/<int:user_id>/', methods=['GET', 'DELETE'])
 def getUserById(user_id):
     if request.method == 'GET':
         try: 
@@ -32,6 +32,8 @@ def getUserById(user_id):
             raise exceptions.NotFound("User not found!")
         except:
             raise exceptions.InternalServerError()
+
+
     elif request.method == 'DELETE':
         try: 
             user = Users.query.get_or_404(user_id)
@@ -46,8 +48,12 @@ def getUserById(user_id):
             # return 'user by id'
 
 
+
+
+
+
 # get all events 
-@main.route('/events', methods=['GET','POST', 'PATCH'])
+@main.route('/events', methods=['GET'])
 def getAllEvents():
     allEvents = Events.query.all()
     return  jsonify([e.serialize() for e in allEvents])
@@ -64,6 +70,9 @@ def getEventsId(event_id):
             raise exceptions.NotFound("Event not found!")
         except:
             raise exceptions.InternalServerError()
+
+
+
     elif request.method == 'DELETE':
         try: 
             event = Events.query.get_or_404(event_id)
@@ -74,7 +83,75 @@ def getEventsId(event_id):
             raise exceptions.NotFound("Event not found!")
         except:
             raise exceptions.InternalServerError()
-    
+
+
+
+
+
+
+# @main.route('/users/<int:user_id>/location',  methods=['PATCH'])
+# def updateLocation(user_id):
+#     if request.method == 'PATCH':
+#         try: 
+#             req = request.get_json()
+#             updated_longitude = req['updated_longitude']
+#             updated_latitude = req['updated_latitude']
+#             db.session.query(Users).filter(Users.id == user_id).update({Users.longitude: updated_longitude, Users.latitude: updated_latitude})
+#             db.session.commit()
+#             return f"Location sucessfully updated!", 201
+#         except:
+#             raise exceptions.InternalServerError()
+
+
+# @main.route('/users/<int:user_id>/update',  methods=['PATCH'])
+# def updateUser(user_id):
+#     if request.method == 'PATCH':
+#         try: 
+#             req = request.get_json()
+#             updated_longitude = req['updated_longitude']
+#             updated_latitude = req['updated_latitude']
+#             db.session.query(Users).filter(Users.id == user_id).update({Users.longitude: updated_longitude, Users.latitude: updated_latitude})
+#             db.session.commit()
+#             return f"Location sucessfully updated!", 201
+#         except:
+#             raise exceptions.InternalServerError()
+
+
+@main.route('/users/<int:user_id>/',  methods=['PATCH'])
+def updateUser(user_id):
+    if request.method == 'PATCH':
+        try: 
+            req = request.get_json()
+            updated_name = req['updated_name']
+            updated_username = req['updated_username']
+            updated_email = req['updated_email']
+            updated_age= req['updated_age']
+            updated_preferences= req['updated_preferences']
+            updated_likedby= req['updated_likedby']
+            updated_matches= req['updated_matches']
+            updated_rejected_events= req['updated__rejected_events']
+            db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.age: updated_age, Users.preferences: updated_preferences, Users.likedby: updated_likedby, Users.matches: updated_matches, Users.rejected_events: updated_rejected_events })
+            db.session.commit()
+            return f"sucessfully updated!", 201
+        except:
+            raise exceptions.InternalServerError()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # get chat 
