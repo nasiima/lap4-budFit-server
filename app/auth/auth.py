@@ -42,17 +42,8 @@ def login():
                 }
                 return jsonify(response), 200
             
-        #     if request.method == 'GET':
-                
-        #         return {
-        #     "id": user.id,
-        #     "name": user.username,
-        #     "preferences": user.preferences
-        # }
-            
-            
         except exceptions.BadRequest:
-
+         
             raise exceptions.BadRequest()
         except exceptions.Unauthorized:
             raise exceptions.Unauthorized('Incorrect password.')
