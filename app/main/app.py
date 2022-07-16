@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug import exceptions
-from app.models import   Users
+from app.models import   Users, Events
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.extensions import db
 
@@ -10,50 +10,9 @@ main = Blueprint('main', __name__)
 CORS(main)
 
 
-# app = Flask(__name__)
-# CORS(app)
-
-
-
 @main.route("/")
 def hello():
     return "Hello World!"
-
-
-# login route
-# @main.route("/auth/login")
-# def login():
-#     return "Hello from login!"
-
-
-# registration route
-# @main.route("/auth/register", methods = ['POST', "GET"])
-# def register():
-#     if request.method=="POST":
-#         try:
-#             req = request.get_json()
-#             username = req['username']
-#             password = req['password']
-            
-#             user = Users.query.filter_by(username=username).first()
-#             if user!=None:
-#                 return jsonify('Username already exists!'), 202
-            
-#             hash = generate_password_hash(password)
-#             new_user = Users(
-#                 name = req['name'],
-#                 username = req['username'],
-#                 email = req['email'], 
-#                 password_digest = hash,
-#             )
-#             db.session.add(new_user)
-#             db.session.commit()
-#             return jsonify(f"New user was added!"), 201
-        
-        
-#         except:
-#             raise exceptions.InternalServerError()
-
 
 
 # get all users route
@@ -86,7 +45,16 @@ def getUserById(user_id):
             raise exceptions.NotFound("User not found!")
         except:
             raise exceptions.InternalServerError()
-    # return 'user by id'
+            # return 'user by id'
+
+
+# get all events 
+@main.route('/events', methods=['GET','POST', 'PATCH'])
+def getAllEvents():
+    allEvents = Events.query.all()
+    return  jsonify([e.serialize() for e in allEvents])
+
+
 
 
 # get chat 
@@ -94,13 +62,9 @@ def getUserById(user_id):
 def getAllChats():
     return 'chats'
 
-# get all events 
-@main.route('/events', methods=['GET','POST', 'PATCH'])
-def getAllEvents():
-    return 'events'
 
 # get  events by id
-@main.route('/chat/<int:event_id>/')
+@main.route('/chat/<int:chat_id>/')
 def getEventsId():
     return 'events'
 
