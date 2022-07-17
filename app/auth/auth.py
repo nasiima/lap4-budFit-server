@@ -75,7 +75,6 @@ def register():
                 password_digest = hash,
                 rating = 0,
                 preferences = '',
-                likedby = '',
                 matches = '',
                 events = '',
                 rejected_events = '',

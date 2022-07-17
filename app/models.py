@@ -4,32 +4,6 @@ import datetime
 import os
 
 
-# class Users(db.Model):
-#     user_id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(64))
-#     username = db.Column(db.String(100))
-#     email = db.Column(db.String(100))
-#     age = db.Column(db.Integer)
-#     password_digest = db.Column(db.String(10000))
-#     # preferences = db.Column(db.String(100))
-#     preferences =  db.Column(db.PickleType, nullable=True)
-
-#     # # (user_id)
-#     # likedby = db.Column(db.String(100)) = no longer needed
-#     #   # (user_id)
-#     matches = db.Column(db.String(100))
-#     #   # (user_id)
-#     # db.Column(db.PickleType(mutable=True))
-#     events = db.Column(db.String(100))
-#     # # (event_id) foreign key
-#     # rejected_events = db.Column(db.String(100))
-#     # rating = db.Column(db.String(100))
-#     rating =  db.Column(db.Integer, nullable=False)
-#     #   #     Ratings - Array(Int)
-#     chats = db.Column(db.String(100))
-#     # # chat_id foreign key
-
-  
 class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
@@ -37,23 +11,17 @@ class Users(db.Model):
     email = db.Column(db.String(100))
     age = db.Column(db.Integer)
     password_digest = db.Column(db.String(10000))
-    preferences = db.Column(db.String(100))
-    # # (user_id)
-    likedby = db.Column(db.String(100))
-    #   # (user_id)
+    preferences =  db.Column(db.PickleType, nullable=True)
     matches = db.Column(db.String(100))
-    #   # (user_id)
-    events = db.Column(db.String(100))
-    # # (event_id)
-    rejected_events = db.Column(db.String(100))
-    rating = db.Column(db.String(100))
-    #   #     Ratings - Array(Int)
-    chats = db.Column(db.String(100))
-    # # chat_id
-  
+    event_id = db.Column(db.String(100), db.ForeignKey('events.id'))
+    # rejected_events = db.Column(db.String(100))
+    rating =  db.Column(db.Integer, nullable=False)
+    chat_id = db.Column(db.String(100), db.ForeignKey('chats.id'))
+    time = db.Column(db.DateTime, nullable=False)
 
 
-    def __init__(self, name, username, email, age, password_digest, preferences, likedby,  matches, events, rejected_events, rating, chats):
+
+    def __init__(self, name, username, email, age, password_digest, preferences,  matches, events, rating, chats):
         self.name = name
         self.username = username
         self.email = email
@@ -61,10 +29,9 @@ class Users(db.Model):
         self.password_digest = password_digest
         self.rating = rating
         self.preferences = preferences
-        self.likedby = likedby 
         self.matches = matches
         self.events = events
-        self.rejected_events = rejected_events
+
         self.chats = chats
     
     def __repr__(self):
@@ -80,10 +47,9 @@ class Users(db.Model):
             'password_digest': self.password_digest,
             'rating': self.rating,
             'preferences': self.preferences,
-            'likedby': self.likedby,
             'matches': self.matches,
             'events': self.events,
-            'rejected_events': self.rejected_events,
+ 
             'chats': self.chats
         }
         
@@ -173,8 +139,7 @@ class Events(db.Model):
 
 
 
-
-class Chat(db.Model):
+class Chats(db.Model):
     chat_id = db.Column(db.Integer, primary_key=True)
     messages = db.Column(db.Integer, db.ForeignKey('message.id'))
 
@@ -190,5 +155,31 @@ class Chat(db.Model):
         return {
             'chat_id': self.chat_id, 
             'messages': self.messages
+        }
+
+
+
+class Messages(db.Model):
+    message_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    comment = db.Column(db.String(140))
+    time = db.Column(db.DateTime, nullable=False)
+
+
+    def __init__(self, chat_id, messages):
+        self.message_id =  message_id
+        self.user_id = user_id
+        self.comment = comment
+        self.time = time
+
+    def __repr__(self):
+        return '<id {}>'.format(self.chat_id)
+    
+    def serialize(self):
+        return {
+            'message_id': self.message_id, 
+            'user_id': self.user_id
+            'comment': self.comment
+            'time': self.time
         }
 
