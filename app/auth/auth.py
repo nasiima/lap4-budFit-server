@@ -59,8 +59,8 @@ def register():
             req = request.get_json()
             username = req['username']
             password = req['password']
-            email = req['email']
-            name = req['name']
+            # email = req['email']
+            # name = req['name']
             
             user = Users.query.filter_by(username=username).first()
             if user!=None:
@@ -75,9 +75,9 @@ def register():
                 password_digest = hash,
                 rating = 0,
                 preferences = '',
-                likedby = '',
                 matches = '',
                 events = '',
+                likedby = '',
                 rejected_events = '',
                 chats = '' 
             )
