@@ -105,7 +105,7 @@ class Events(db.Model):
     age = db.Column(db.Integer)
     pic = db.Column(db.String(64))
     skilllevel = db.Column(db.String(64))
-    time = db.Column(db.String(64))
+    time = db.Column(db.DateTime, nullable=False)
     lookingfor = db.Column(db.String(64))
     partysize = db.Column(db.String(64))
 
