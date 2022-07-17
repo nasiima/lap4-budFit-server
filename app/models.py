@@ -10,19 +10,23 @@ class Users(db.Model):
     email = db.Column(db.String(100))
     age = db.Column(db.Integer)
     password_digest = db.Column(db.String(10000))
-    preferences = db.Column(db.String(100))
+    # preferences = db.Column(db.String(100))
+    preferences =  db.Column(db.PickleType, nullable=True)
+
     # # (user_id)
-    likedby = db.Column(db.String(100))
+    # likedby = db.Column(db.String(100)) = no longer needed
     #   # (user_id)
     matches = db.Column(db.String(100))
     #   # (user_id)
+    # db.Column(db.PickleType(mutable=True))
     events = db.Column(db.String(100))
-    # # (event_id)
-    rejected_events = db.Column(db.String(100))
-    rating = db.Column(db.String(100))
+    # # (event_id) foreign key
+    # rejected_events = db.Column(db.String(100))
+    # rating = db.Column(db.String(100))
+    rating =  db.Column(db.Float)
     #   #     Ratings - Array(Int)
     chats = db.Column(db.String(100))
-    # # chat_id
+    # # chat_id foreign key
   
 
     def __init__(self, name, username, email, age, password_digest, preferences, likedby,  matches, events, rejected_events, rating, chats):
