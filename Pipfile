@@ -19,15 +19,8 @@ pyjwt = "*"
 
 pytest = "*"
 pytest-cov = "*"
-<<<<<<< HEAD
-python-dotenv = "*"
-coverage = "*"
-flask-cors = "*"
-psycopg2-binary = "*"
-=======
 pytest-flask-sqlalchemy = "*"
 gevent = "*"
->>>>>>> 5cb0b34405eea3617ea8b0457318ee4cd1992758
 
 [dev-packages]
 
@@ -38,3 +31,4 @@ python_version = "3.10"
 dev = "bash -c \"export FLASK_ENV='development' && flask run\""
 test = "pytest ."
 start = "gunicorn app:app"
+coverage = "pytest --cov-report term-missing --cov=."
