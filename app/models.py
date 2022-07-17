@@ -1,8 +1,35 @@
 from .extensions import db 
 import jwt
 import datetime
+import os
 
 
+# class Users(db.Model):
+#     user_id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(64))
+#     username = db.Column(db.String(100))
+#     email = db.Column(db.String(100))
+#     age = db.Column(db.Integer)
+#     password_digest = db.Column(db.String(10000))
+#     # preferences = db.Column(db.String(100))
+#     preferences =  db.Column(db.PickleType, nullable=True)
+
+#     # # (user_id)
+#     # likedby = db.Column(db.String(100)) = no longer needed
+#     #   # (user_id)
+#     matches = db.Column(db.String(100))
+#     #   # (user_id)
+#     # db.Column(db.PickleType(mutable=True))
+#     events = db.Column(db.String(100))
+#     # # (event_id) foreign key
+#     # rejected_events = db.Column(db.String(100))
+#     # rating = db.Column(db.String(100))
+#     rating =  db.Column(db.Integer, nullable=False)
+#     #   #     Ratings - Array(Int)
+#     chats = db.Column(db.String(100))
+#     # # chat_id foreign key
+
+  
 class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
@@ -10,24 +37,21 @@ class Users(db.Model):
     email = db.Column(db.String(100))
     age = db.Column(db.Integer)
     password_digest = db.Column(db.String(10000))
-    # preferences = db.Column(db.String(100))
-    preferences =  db.Column(db.PickleType, nullable=True)
-
+    preferences = db.Column(db.String(100))
     # # (user_id)
-    # likedby = db.Column(db.String(100)) = no longer needed
+    likedby = db.Column(db.String(100))
     #   # (user_id)
     matches = db.Column(db.String(100))
     #   # (user_id)
-    # db.Column(db.PickleType(mutable=True))
     events = db.Column(db.String(100))
-    # # (event_id) foreign key
-    # rejected_events = db.Column(db.String(100))
-    # rating = db.Column(db.String(100))
-    rating =  db.Column(db.Float)
+    # # (event_id)
+    rejected_events = db.Column(db.String(100))
+    rating = db.Column(db.String(100))
     #   #     Ratings - Array(Int)
     chats = db.Column(db.String(100))
-    # # chat_id foreign key
+    # # chat_id
   
+
 
     def __init__(self, name, username, email, age, password_digest, preferences, likedby,  matches, events, rejected_events, rating, chats):
         self.name = name
