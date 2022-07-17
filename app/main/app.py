@@ -34,6 +34,23 @@ def getUserById(user_id):
         except:
             raise exceptions.InternalServerError()
 
+    # if request.method == 'PATCH':
+    #     try:
+    #         req = request.get_json()
+    #         updated_name = req['updated_name']
+    #         updated_username = req['updated_username']
+    #         updated_email = req['updated_email']
+    #         updated_age= req['updated_age']
+    #         updated_preferences= req['updated_preferences']
+    #         updated_likedby= req['updated_likedby']
+    #         updated_matches= req['updated_matches']
+    #         updated_rejected_events= req['updated__rejected_events']
+    #         db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.age: updated_age, Users.preferences: updated_preferences, Users.likedby: updated_likedby, Users.matches: updated_matches, Users.rejected_events: updated_rejected_events })
+    #         db.session.commit()
+    #         return f"sucessfully updated!", 201
+    #     except:
+    #         raise exceptions.InternalServerError()
+
     elif request.method == 'DELETE':
         try: 
             user = Users.query.get_or_404(user_id)
@@ -69,6 +86,8 @@ def getEventsId(event_id):
         except:
             raise exceptions.InternalServerError()
 
+  
+
     elif request.method == 'DELETE':
         try: 
             event = Events.query.get_or_404(event_id)
@@ -97,11 +116,13 @@ def getEventsId(event_id):
 
 
 
-@main.route('/users/<int:user_id>/',  methods=['PATCH'])
+@main.route('/users/<int:user_id>',  methods=['PATCH'])
 def updateUser(user_id):
+    #  return 'UPDATE'
     if request.method == 'PATCH':
         try: 
             req = request.get_json()
+          
             updated_name = req['updated_name']
             updated_username = req['updated_username']
             updated_email = req['updated_email']
@@ -109,7 +130,7 @@ def updateUser(user_id):
             updated_preferences= req['updated_preferences']
             updated_likedby= req['updated_likedby']
             updated_matches= req['updated_matches']
-            updated_rejected_events= req['updated__rejected_events']
+            updated_rejected_events= req['updated_rejected_events']
             db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.age: updated_age, Users.preferences: updated_preferences, Users.likedby: updated_likedby, Users.matches: updated_matches, Users.rejected_events: updated_rejected_events })
             db.session.commit()
             return f"sucessfully updated!", 201
@@ -119,10 +140,20 @@ def updateUser(user_id):
 
 
 
+
+
 # get chat 
 @main.route('/chat', methods=['GET','POST'])
 def getAllChats():
     return 'chats'
+
+
+
+
+
+
+
+
 
 
 @main.errorhandler(exceptions.NotFound)

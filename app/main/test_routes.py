@@ -25,6 +25,12 @@ def test_get_oneuser(api):
     assert b'user_id' in app.get_data()
 
 
+def test_get_oneevent(api):
+    app = api.get('/events/1')
+    assert app.status == '200 OK'
+    assert b'event_id' in app.get_data()
+
+
 
 
 
