@@ -5,12 +5,17 @@ INSERT INTO users (name, username, email, age, password_digest, rating, preferen
 
 
 TABLE FOR EVENTS 
-DROP TABLE IF EXISTS events; CREATE TABLE events ( event_id serial PRIMARY KEY,  activity varchar(64), descr varchar(100), location varchar(64), spaces varchar(100), age int, pic varchar(200), skilllevel varchar(64), time varchar(64), lookingfor varchar(64), partysize varchar(64));
+DROP TABLE IF EXISTS events; CREATE TABLE events ( event_id serial PRIMARY KEY, user_id INT, FOREIGN KEY(user_id) REFERENCES users(user_id), activity varchar(64), descr varchar(100), location varchar(64), spaces varchar(100), age int, pic varchar(200), skilllevel varchar(64), time varchar(64), lookingfor varchar(64), partysize varchar(64));
 
-INSERT INTO events ( activity, descr, location, spaces, age, pic, skilllevel, time, lookingfor, partysize) VALUES ('activity', 'desc', 'location', 'spaces', 18, 'ss', 'skilllevel', 'time', 'lookingfor', 'partysize');
+INSERT INTO events ( user_id, activity, descr, location, spaces, age, pic, skilllevel, time, lookingfor, partysize) VALUES (29, 'activity', 'desc', 'location', 'spaces', 18, 'ss', 'skilllevel', 'time', 'lookingfor', 'partysize');
+
+
+
+
+
 
 ADD THIS TO EVENTS DB
-FOREIGN KEY (user_id) REFERENCES Users (user_id),
+FOREIGN KEY (users.user_id) REFERENCES Users (user_id),
  user_id,
  1
 
