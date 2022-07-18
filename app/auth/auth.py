@@ -71,7 +71,7 @@ def register():
                 name = req['name'],
                 username = req['username'],
                 email = req['email'], 
-                DOB = 12.9,
+                DOB = 12,
                 password_digest = hash,
                 preferences = '',
                 picture = '' 
