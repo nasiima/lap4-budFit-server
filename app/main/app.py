@@ -22,7 +22,7 @@ def getAllUsers():
 
 
 
-# get  user by id
+# get  user by id and delete user by id
 @main.route('/users/<int:user_id>/', methods=['GET', 'DELETE'])
 def getUserById(user_id):
     if request.method == 'GET':
@@ -34,22 +34,6 @@ def getUserById(user_id):
         except:
             raise exceptions.InternalServerError()
 
-    # if request.method == 'PATCH':
-    #     try:
-    #         req = request.get_json()
-    #         updated_name = req['updated_name']
-    #         updated_username = req['updated_username']
-    #         updated_email = req['updated_email']
-    #         updated_age= req['updated_age']
-    #         updated_preferences= req['updated_preferences']
-    #         updated_likedby= req['updated_likedby']
-    #         updated_matches= req['updated_matches']
-    #         updated_rejected_events= req['updated__rejected_events']
-    #         db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.age: updated_age, Users.preferences: updated_preferences, Users.likedby: updated_likedby, Users.matches: updated_matches, Users.rejected_events: updated_rejected_events })
-    #         db.session.commit()
-    #         return f"sucessfully updated!", 201
-    #     except:
-    #         raise exceptions.InternalServerError()
 
     elif request.method == 'DELETE':
         try: 
@@ -74,7 +58,7 @@ def getAllEvents():
 
 
 
-# get  events by id
+# get  events by id and delete event by id
 @main.route('/events/<int:event_id>/',  methods=['GET', 'DELETE'])
 def getEventsId(event_id):
     if request.method == 'GET':
@@ -85,8 +69,6 @@ def getEventsId(event_id):
             raise exceptions.NotFound("Event not found!")
         except:
             raise exceptions.InternalServerError()
-
-  
 
     elif request.method == 'DELETE':
         try: 
@@ -100,21 +82,9 @@ def getEventsId(event_id):
             raise exceptions.InternalServerError()
 
 
-# @main.route('/users/<int:user_id>/location',  methods=['PATCH'])
-# def updateLocation(user_id):
-#     if request.method == 'PATCH':
-#         try: 
-#             req = request.get_json()
-#             updated_longitude = req['updated_longitude']
-#             updated_latitude = req['updated_latitude']
-#             db.session.query(Users).filter(Users.id == user_id).update({Users.longitude: updated_longitude, Users.latitude: updated_latitude})
-#             db.session.commit()
-#             return f"Location sucessfully updated!", 201
-#         except:
-#             raise exceptions.InternalServerError()
 
 
-
+#  get all matches
 @main.route('/matches', methods=['GET'])
 def getAllMatches():
     allMatches = Matches.query.all()
@@ -122,23 +92,47 @@ def getAllMatches():
 
 
 
+#  get matches by id and delete match by id
+@main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
+def getMatchesById(match_id):
+     if request.method == 'GET':
+        try: 
+            match = Matches.query.get_or_404(match_id)
+            return  jsonify([match.serialize()])
+        except exceptions.NotFound:
+            raise exceptions.NotFound("Match not found!")
+        except:
+            raise exceptions.InternalServerError()
+    
+     elif request.method == 'DELETE':
+        try: 
+            match = Matches.query.get_or_404(match_id)
+            db.session.delete(match)
+            db.session.commit()
+            return f"Event was sucessfully deleted!", 204
+        except exceptions.NotFound:
+            raise exceptions.NotFound("Event not found!")
+        except:
+            raise exceptions.InternalServerError()
+
+
+
+
 
 @main.route('/users/<int:user_id>',  methods=['PATCH'])
 def updateUser(user_id):
-    #  return 'UPDATE'
     if request.method == 'PATCH':
         try: 
             req = request.get_json()
+            print(req)
           
             updated_name = req['updated_name']
             updated_username = req['updated_username']
             updated_email = req['updated_email']
-            updated_age= req['updated_age']
-            updated_preferences= req['updated_preferences']
-            updated_likedby= req['updated_likedby']
-            updated_matches= req['updated_matches']
-            updated_rejected_events= req['updated_rejected_events']
-            db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.age: updated_age, Users.preferences: updated_preferences, Users.likedby: updated_likedby, Users.matches: updated_matches, Users.rejected_events: updated_rejected_events })
+            updated_dob = req['updated_dob']
+            updated_preferences = req['updated_preferences']
+            updated_picture = req['updated_picture']
+            db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.dob: updated_dob, Users.preferences: updated_preferences, Users.picture: updated_picture })
             db.session.commit()
             return f"sucessfully updated!", 201
         except:
