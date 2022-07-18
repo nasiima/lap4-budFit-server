@@ -84,7 +84,7 @@ class Events(db.Model):
     descr = db.Column(db.String(100))
     location = db.Column(db.String(64))
     spaces = db.Column(db.Integer)
-    time = db.Column(db.DateTime)
+    time = db.Column(db.Date)
 
     def __init__(self, activity, descr, location, spaces, time ):
         self.activity = activity

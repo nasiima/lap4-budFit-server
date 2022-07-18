@@ -11,9 +11,9 @@ INSERT INTO users (name, username, email, dob, password_digest, preferences, pic
 TABLE FOR EVENTS 
 
 ---------------------------------------------------------------
-DROP TABLE IF EXISTS events; CREATE TABLE events ( event_id serial PRIMARY KEY, activity varchar(64), descr varchar(100), location varchar(64), spaces varchar(100), time date);
+DROP TABLE IF EXISTS events; CREATE TABLE events ( event_id serial PRIMARY KEY, activity varchar(64), descr varchar(100), location varchar(64), spaces varchar(100), time DATE);
 
-INSERT INTO events (activity, descr, location, spaces, time) VALUES (2, 'activity', 'desc', 'location', 'spaces', '2022-04-04' );
+INSERT INTO events (activity, descr, location, spaces, time) VALUES (2, 'activity', 'desc', 'location', 'spaces', '2019-05-21' );
 
 ---------------------------------------------------------------
 
