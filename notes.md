@@ -1,10 +1,10 @@
 NEW TABLE FOR USERS
 
 ---------------------------------------------------------------
-DROP TABLE IF EXISTS users; CREATE TABLE users ( user_id serial PRIMARY KEY, name varchar(100), username VARCHAR(20), email VARCHAR(100), dob FLOAT, password_digest VARCHAR(1000), preferences VARCHAR(1000), picture VARCHAR(1000) );
+DROP TABLE IF EXISTS users; CREATE TABLE users ( user_id serial PRIMARY KEY, name varchar(100), username VARCHAR(20), email VARCHAR(100), dob INT, password_digest VARCHAR(1000), preferences VARCHAR(1000), picture VARCHAR(1000) );
 
 
-INSERT INTO users (name, username, email, dob, password_digest, preferences, picture   ) VALUES ('test', 'usernametest', 'test@test.com', 18.02, 'PASS', 'testpref', 'picturetest');
+INSERT INTO users (name, username, email, dob, password_digest, preferences, picture   ) VALUES ('test', 'usernametest', 'test@test.com', 18, 'PASS', 'testpref', 'picturetest');
 
 ---------------------------------------------------------------
 
