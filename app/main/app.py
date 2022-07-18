@@ -4,6 +4,20 @@ from flask_cors import CORS
 from werkzeug import exceptions
 from app.models import   Users, Events
 from app.extensions import db
+from flask_socketio import SocketIO, send
+import socketio 
+
+app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'secretKey'
+
+socketIo = SocketIO(app, cors_allowed_origins='*')
+
+app.debug = True
+
+app.host = 'localhost'
+
+
 
 main = Blueprint('main', __name__) 
 CORS(main)
@@ -172,6 +186,18 @@ def handle_500(err):
     return {'message': f"It's not you, it's us"}, 500
 
 
+
+
+
+
+@socketIo.on("message")
+def handleMessage(msg):
+    print(msg)
+    send(msg, broadcast=True)
+    return None
+
+if __name__ == '__main__':
+    socketIo.run(app)
 
 
 if __name__ == "__main__":
