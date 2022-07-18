@@ -11,9 +11,9 @@ INSERT INTO users (name, username, email, dob, password_digest, preferences, pic
 TABLE FOR EVENTS 
 
 ---------------------------------------------------------------
-DROP TABLE IF EXISTS events; CREATE TABLE events ( event_id serial PRIMARY KEY, activity varchar(64), descr varchar(100), location varchar(64), spaces varchar(100), time DATE);
+DROP TABLE IF EXISTS events; CREATE TABLE events ( event_id serial PRIMARY KEY, activity varchar(64), title VARCHAR(100), descr varchar(100), location varchar(64), spaces varchar(100), date DATE);
 
-INSERT INTO events (activity, descr, location, spaces, time) VALUES ('activity', 'desc', 'location', 'spaces', '2019-05-21' );
+INSERT INTO events (activity, title, descr, location, spaces, date) VALUES ('activity', 'title', 'desc', 'location', 'spaces', '2019-05-21' );
 
 
 ---------------------------------------------------------------
@@ -22,7 +22,7 @@ TABLE FOR Matches
 
 ---------------------------------------------------------------
 
-DROP TABLE IF EXISTS matches; CREATE TABLE matches ( user_id INT, FOREIGN KEY(user_id) REFERENCES users(user_id), event_id INT, FOREIGN KEY(event_id) REFERENCES events(event_id) );
+DROP TABLE IF EXISTS matches; CREATE TABLE matches (match_id serial PRIMARY KEY, user_id INT, FOREIGN KEY(user_id) REFERENCES users(user_id), event_id INT, FOREIGN KEY(event_id) REFERENCES events(event_id) );
 
 INSERT INTO matches (user_id, event_id) VALUES (1, 1);
 
