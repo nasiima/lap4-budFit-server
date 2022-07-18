@@ -112,23 +112,25 @@ class Events(db.Model):
 
 
 
-# class Matches(db.Model):
-#     event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+class Matches(db.Model):
+    match_id = db.Column(db.Integer, primary_key=True)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
 
-    # def __init__(self, chat_id, messages):
-    #     self.event_id = event_id
-    #     self.user_id = user_id
+    def __init__(self, chat_id, messages):
+        self.event_id = event_id
+        self.user_id = user_id
 
-    # def __repr__(self):
-    #     return '<id {}>'.format(self.chat_id)
+    def __repr__(self):
+        return '<id {}>'.format(self.match_id)
     
-    # def serialize(self):
-    #     return {
-    #         'chat_id': self.event_id, 
-    #         'messages': self.user_id
-    #     }
+    def serialize(self):
+        return {
+            'match_id': self.match_id, 
+            'event_id': self.event_id, 
+            'user_id': self.user_id
+        }
 
 
 

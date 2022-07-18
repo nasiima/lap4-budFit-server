@@ -22,7 +22,7 @@ TABLE FOR Matches
 
 ---------------------------------------------------------------
 
-DROP TABLE IF EXISTS matches; CREATE TABLE matches ( user_id INT, FOREIGN KEY(user_id) REFERENCES users(user_id), event_id INT, FOREIGN KEY(event_id) REFERENCES events(event_id) );
+DROP TABLE IF EXISTS matches; CREATE TABLE matches (match_id serial PRIMARY KEY, user_id INT, FOREIGN KEY(user_id) REFERENCES users(user_id), event_id INT, FOREIGN KEY(event_id) REFERENCES events(event_id) );
 
 INSERT INTO matches (user_id, event_id) VALUES (1, 1);
 
