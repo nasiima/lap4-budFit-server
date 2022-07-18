@@ -84,14 +84,14 @@ class Events(db.Model):
     descr = db.Column(db.String(100))
     location = db.Column(db.String(64))
     spaces = db.Column(db.Integer)
-    time = db.Column(db.Date)
+    date = db.Column(db.Date)
 
-    def __init__(self, activity, descr, location, spaces, time ):
+    def __init__(self, activity, descr, location, spaces, date ):
         self.activity = activity
         self.descr = descr
         self.location = location
         self.spaces = spaces 
-        self.time = time
+        self.date = date
 
     
     def __repr__(self):
@@ -104,7 +104,7 @@ class Events(db.Model):
        'descr': self.descr,
        'location': self.location,
        'spaces': self.spaces,
-       'time': self.time
+       'date': self.date
         }
 
 
