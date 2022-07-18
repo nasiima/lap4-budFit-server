@@ -111,7 +111,6 @@ class Events(db.Model):
 
 
 
-
 class Matches(db.Model):
     match_id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))

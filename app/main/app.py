@@ -147,7 +147,7 @@ def updateEvent(event_id):
             updated_location = req['updated_location']
             updated_spaces= req['updated_spaces']
             updated_date = req['updated_date']
-            db.session.query(Events).filter(Events.id == event_id).update({Events.name: updated_title, Events.username: updated_activity, Events.email: updated_descr, Events.dob: updated_location, Events.preferences: updated_spaces, Events.picture: updated_date })
+            db.session.query(Events).filter(Events.id == event_id).update({Events.title: updated_title, Events.activity: updated_activity, Events.descr: updated_descr, Events.location: updated_location, Events.spaces: updated_spaces, Events.date: updated_date })
             db.session.commit()
             return f"sucessfully updated!", 201
         except:
