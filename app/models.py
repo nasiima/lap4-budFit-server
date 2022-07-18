@@ -9,29 +9,20 @@ class Users(db.Model):
     name = db.Column(db.String(64))
     username = db.Column(db.String(100))
     email = db.Column(db.String(100))
-    age = db.Column(db.Integer)
+    dob = db.Column(db.Integer)
     password_digest = db.Column(db.String(10000))
-    preferences =  db.Column(db.PickleType, nullable=True)
-    # matches = db.Column(db.String(100))
-    event_id = db.Column(db.String(100), db.ForeignKey('events.event_id'))
-    # rejected_events = db.Column(db.String(100))
-    rating =  db.Column(db.Integer, nullable=False)
-    chat_id = db.Column(db.String(100), db.ForeignKey('chats.chat_id'))
-    time = db.Column(db.DateTime, nullable=False)
+    preferences =  db.Column(db.String(140))
+    picture = db.Column(db.String(10000))
 
-
-    def __init__(self, name, username, email, age, password_digest, preferences, event_id, rating, chat_id, time):
+    def __init__(self, name, username, email, dob, password_digest, preferences, pic):
         self.name = name
         self.username = username
         self.email = email
-        self.age = age
+        self.dob = dob
         self.password_digest = password_digest
         self.preferences = preferences
-        # self.matches = matches
-        self.event_id= event_id
-        self.rating = rating
-        self.chat_id= chat_id
-        self.time = time
+        self.picture = picture
+    
     
     def __repr__(self):
         return '<id {}>'.format(self.user_id)
@@ -42,72 +33,12 @@ class Users(db.Model):
             'name': self.name, 
             'username': self.username, 
             'email': self.email,
-            'age': self.age,
+            'dob': self.dob,
             'password_digest': self.password_digest,
             'preferences': self.preferences,
-            'event_id': self.event_id,
-            'rating': self.rating,
-            'chat_id': self.chat_id,
-            # 'matches': self.matches,
-            'time': self.time
+            'picture': self.picture
         }
 
-# class Users(db.Model):
-#     user_id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(64))
-#     username = db.Column(db.String(100))
-#     email = db.Column(db.String(100))
-#     age = db.Column(db.Integer)
-#     password_digest = db.Column(db.String(10000))
-#     preferences = db.Column(db.String(100))
-#     # # (user_id)
-#     likedby = db.Column(db.String(100))
-#     #   # (user_id)
-#     matches = db.Column(db.String(100))
-#     #   # (user_id)
-#     events = db.Column(db.String(100))
-#     # # (event_id)
-#     rejected_events = db.Column(db.String(100))
-#     rating = db.Column(db.String(100))
-#     #   #     Ratings - Array(Int)
-#     chats = db.Column(db.String(100))
-#     # # chat_id
-  
-
-
-#     def __init__(self, name, username, email, age, password_digest, preferences, likedby,  matches, events, rejected_events, rating, chats):
-#         self.name = name
-#         self.username = username
-#         self.email = email
-#         self.age = age
-#         self.password_digest = password_digest
-#         self.rating = rating
-#         self.preferences = preferences
-#         self.likedby = likedby 
-#         self.matches = matches
-#         self.events = events
-#         self.rejected_events = rejected_events
-#         self.chats = chats
-    
-#     def __repr__(self):
-#         return '<id {}>'.format(self.user_id)
-    
-#     def serialize(self):
-#         return {
-#             'user_id': self.user_id,
-#             'name': self.name, 
-#             'username': self.username, 
-#             'email': self.email,
-#             'age': self.age,
-#             'password_digest': self.password_digest,
-#             'rating': self.rating,
-#             'preferences': self.preferences,
-#             'likedby': self.likedby,
-#             'matches': self.matches,
-#             'events': self.events,
-#             'rejected_events': self.rejected_events,
-#             'chats': self.chats
-#         }
         
     def encode_auth_token(self, username):
         """
@@ -148,16 +79,14 @@ class Users(db.Model):
 
 class Events(db.Model):
     event_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    title =  db.Column(db.String(140))
     activity = db.Column(db.String(64))
     descr = db.Column(db.String(100))
     location = db.Column(db.String(64))
     spaces = db.Column(db.Integer)
-    age = db.Column(db.Integer)
     pic = db.Column(db.String(64))
     skilllevel = db.Column(db.String(64))
-    # time = db.Column(db.DateTime, nullable=False)
-    time =  db.Column(db.String(64))
+    time = db.Column(db.DateTime, nullable=False)
     lookingfor = db.Column(db.String(64))
     partysize = db.Column(db.String(64))
 

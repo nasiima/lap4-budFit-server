@@ -71,16 +71,12 @@ def register():
                 name = req['name'],
                 username = req['username'],
                 email = req['email'], 
-                age = 0,
+                DOB = 12.9,
                 password_digest = hash,
-                rating = 0,
                 preferences = '',
-                matches = '',
-                events = '',
-                likedby = '',
-                rejected_events = '',
-                chats = '' 
+                picture = '' 
             )
+            
             db.session.add(new_user)
             db.session.commit()
             return jsonify(f"New user was added!"), 201
