@@ -15,15 +15,31 @@ INSERT INTO events ( user_id, activity, descr, location, spaces, age, pic, skill
 TABLE FOR CHAT
 DROP TABLE IF EXISTS chats; CREATE TABLE chats ( chat_id serial PRIMARY KEY, message_id INT, FOREIGN KEY(message_id) REFERENCES messages(message_id));
 
-INSERT INTO chats ( message_id, ) VALUES (1);
+INSERT INTO chats ( message_id ) VALUES (2);
 
 -----------
+
+TABLE FOR CHAT
+DROP TABLE IF EXISTS chats; CREATE TABLE chats ( chat_id serial PRIMARY KEY)
+
+
+--------------
 
 
 TABLE FOR MESSAGES
 DROP TABLE IF EXISTS messages; CREATE TABLE messages ( message_id serial PRIMARY KEY, chat_id INT, FOREIGN KEY(chat_id) REFERENCES messages(chat_id));
 
 INSERT INTO messages ( chat_id, ) VALUES (1);
+
+
+-----------
+
+TABLE FOR MESSAGES
+
+DROP TABLE IF EXISTS messages; CREATE TABLE messages ( message_id serial PRIMARY KEY, user_id INT, FOREIGN KEY(user_id) REFERENCES users(user_id), comment VARCHAR(140), time VARCHAR(140));
+
+INSERT INTO messages ( user_id, comment, time) VALUES (29, 'comment', 'time' );
+
 
 
 
