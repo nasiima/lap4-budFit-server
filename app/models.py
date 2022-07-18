@@ -88,6 +88,7 @@ class Events(db.Model):
 
     def __init__(self, activity, descr, location, spaces, date ):
         self.activity = activity
+        self.title = title
         self.descr = descr
         self.location = location
         self.spaces = spaces 
@@ -100,6 +101,7 @@ class Events(db.Model):
     def serialize(self):
         return {
        'event_id': self.event_id,
+        'title': self.title,
        'activity': self.activity,
        'descr': self.descr,
        'location': self.location,
