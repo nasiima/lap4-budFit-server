@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug import exceptions
-from app.models import   Users, Events, Matches
+from app.models import   Users, Events
 from app.extensions import db
 
 main = Blueprint('main', __name__) 
@@ -115,10 +115,10 @@ def getEventsId(event_id):
 
 
 
-@main.route('/matches', methods=['GET'])
-def getAllMatches():
-    allMatchess = Matches.query.all()
-    return  jsonify([e.serialize() for e in allMatches])
+# @main.route('/matches', methods=['GET'])
+# def getAllMatches():
+#     allMatchess = Matches.query.all()
+#     return  jsonify([e.serialize() for e in allMatches])
 
 
 
