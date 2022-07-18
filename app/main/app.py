@@ -82,8 +82,6 @@ def getEventsId(event_id):
             raise exceptions.InternalServerError()
 
 
-
-
 #  get all matches
 @main.route('/matches', methods=['GET'])
 def getAllMatches():
@@ -117,8 +115,6 @@ def getMatchesById(match_id):
 
 
 
-
-
 @main.route('/users/<int:user_id>',  methods=['PATCH'])
 def updateUser(user_id):
     if request.method == 'PATCH':
@@ -139,6 +135,23 @@ def updateUser(user_id):
             raise exceptions.InternalServerError()
 
 
+@main.route('/events/<int:event_id>',  methods=['PATCH'])
+def updateEvent(event_id):
+    if request.method == 'PATCH':
+        try: 
+            req = request.get_json()
+            print(req)
+            updated_title = req['updated_title']
+            updated_activity = req['updated_activity']
+            updated_descr = req['updated_descr']
+            updated_location = req['updated_location']
+            updated_spaces= req['updated_spaces']
+            updated_date = req['updated_date']
+            db.session.query(Events).filter(Events.id == event_id).update({Events.name: updated_title, Events.username: updated_activity, Events.email: updated_descr, Events.dob: updated_location, Events.preferences: updated_spaces, Events.picture: updated_date })
+            db.session.commit()
+            return f"sucessfully updated!", 201
+        except:
+            raise exceptions.InternalServerError()
 
 
 
