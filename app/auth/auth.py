@@ -50,7 +50,7 @@ def login():
         except:
             raise exceptions.InternalServerError()
   
-  
+
 # Registration route
 @auth.route("/auth/register", methods=["POST"])
 def register():
@@ -60,8 +60,8 @@ def register():
             req = request.get_json()
             username = req['username']
             password = req['password']
-            email = req['email']
-            name = req['name']
+            # email = req['email']
+            # name = req['name']
             
             user = Users.query.filter_by(username=username).first()
             if user!=None:
