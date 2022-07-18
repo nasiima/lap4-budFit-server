@@ -50,6 +50,7 @@ def login():
         except:
             raise exceptions.InternalServerError()
   
+  
 # Registration route
 @auth.route("/auth/register", methods=["POST"])
 def register():
