@@ -146,9 +146,6 @@ class Users(db.Model):
 
 
 
-
-
-
 class Events(db.Model):
     event_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
@@ -235,7 +232,7 @@ class Messages(db.Model):
         self.time = time
 
     def __repr__(self):
-        return '<id {}>'.format(self.chat_id)
+        return '<id {}>'.format(self.message_id)
     
     def serialize(self):
         return {
