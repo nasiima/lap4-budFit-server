@@ -82,12 +82,6 @@ def getEventsId(event_id):
             raise exceptions.InternalServerError()
 
 
-#  get all matches
-@main.route('/matches', methods=['GET'])
-def getAllMatches():
-    allMatches = Matches.query.all()
-    return  jsonify([e.serialize() for e in allMatches])
-
 
 
 #  get matches by id and delete match by id
