@@ -88,7 +88,7 @@ class Events(db.Model):
     spaces = db.Column(db.Integer)
     date = db.Column(db.Date)
 
-    def __init__(self, activity, descr, location, spaces, date ):
+    def __init__(self, activity, title, descr, location, spaces, date ):
         self.activity = activity
         self.title = title
         self.descr = descr

@@ -60,39 +60,32 @@ def getUserById(user_id):
 
 
 @cross_origin()
-@main.route('/events', methods=['GET'])
+@main.route('/events', methods=['GET', 'POST'])
 def getAllEvents():
-    allEvents = Events.query.all()
-    return  jsonify([e.serialize() for e in allEvents])
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    if request.method == 'GET':
+        allEvents = Events.query.all()
+        return  jsonify([e.serialize() for e in allEvents])
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
-# get all events 
-# @cross_origin()
-# @main.route('/events', methods=['GET', 'POST'])
-# def getAllEvents():
-#     if request.method == 'GET':
-#         try: 
-#             allEvents = Events.query.all()
-#             return  jsonify([e.serialize() for e in allEvents])
-#      elif request.method == 'POST':
-    #     try:
-    # #         req = request.get_json()
-    # #         new_event = Products(
-    # #             # user_id = req['user_id'],
-    # #             activity = req['activity'], 
-    # #             title = req['title'],
-    # #             descr = req['descr'], 
-    # #             location = req['location'],
-    # #             spaces = req['spaces'],  
-    # #             date = req['date']
-    # #         )
-    # #         db.session.add(new_event)
-    # #         db.session.commit()
-    # #         return f"New Event was added!", 201
+    elif request.method == 'POST':
+        try:
+            req = request.get_json()
+            print(req)
+            new_event = Events(
+                activity = req['activity'], 
+                title = req['title'],
+                descr = req['descr'], 
+                location = req['location'],
+                spaces = req['spaces'],  
+                date = req['date']
+            )
+            db.session.add(new_event)
+            db.session.commit()
+            return f"New Event was added!", 201
 
-    # #     except: 
-    # #         raise exceptions.InternalServerError()
+        except: 
+            raise exceptions.InternalServerError()
 
 
 
