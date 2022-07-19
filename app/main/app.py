@@ -38,6 +38,8 @@ def getUserById(user_id):
         try: 
             user = Users.query.get_or_404(user_id)
             return  jsonify([user.serialize()])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         except exceptions.NotFound:
             raise exceptions.NotFound("User not found!")
         except:
