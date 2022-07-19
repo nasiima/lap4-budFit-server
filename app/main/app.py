@@ -152,44 +152,59 @@ def getMatchesById(match_id):
             raise exceptions.InternalServerError()
 
 
+@main.route('/users/<int:user_id>',  methods=['PATCH'])
+def updateUser(user_id):
+    if request.method == 'PATCH':
+        try:           
+            updated_name = request.json['name']
+            updated_username = request.json['username']
+            updated_email = request.json['email']
+            updated_dob = request.json['dob']
+            updated_preferences = request.json['preferences']
+            updated_picture = request.json['picture']
 
-# @main.route('/users/<int:user_id>',  methods=['PATCH'])
-# def updateUser(user_id):
-#     if request.method == 'PATCH':
-#         try: 
-#             req = request.get_json()
-#             print(req)
-          
-#             updated_name = req['updated_name']
-#             updated_username = req['updated_username']
-#             updated_email = req['updated_email']
-#             updated_dob = req['updated_dob']
-#             updated_preferences = req['updated_preferences']
-#             updated_picture = req['updated_picture']
-#             db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.dob: updated_dob, Users.preferences: updated_preferences, Users.picture: updated_picture })
-#             db.session.commit()
-#             return f"sucessfully updated!", 201
-#         except:
-#             raise exceptions.InternalServerError()
+            thisUser = Users.query.get(user_id)
+
+            thisUser.name = updated_name
+            thisUser.username = updated_username
+            thisUser.email = updated_email
+            thisUser.dob = updated_dob
+            thisUser.preferences = updated_preferences
+            thisUser.picture = updated_picture
+            
+            db.session.add(thisUser)
+            db.session.commit()
+            return f"sucessfully updated!", 201
+        except:
+            raise exceptions.InternalServerError()
 
 
-# @main.route('/events/<int:event_id>',  methods=['PATCH'])
-# def updateEvent(event_id):
-#     if request.method == 'PATCH':
-#         try: 
-#             req = request.get_json()
-#             print(req)
-#             updated_title = req['updated_title']
-#             updated_activity = req['updated_activity']
-#             updated_descr = req['updated_descr']
-#             updated_location = req['updated_location']
-#             updated_spaces= req['updated_spaces']
-#             updated_date = req['updated_date']
-#             db.session.query(Events).filter(Events.id == event_id).update({Events.title: updated_title, Events.activity: updated_activity, Events.descr: updated_descr, Events.location: updated_location, Events.spaces: updated_spaces, Events.date: updated_date })
-#             db.session.commit()
-#             return f"sucessfully updated!", 201
-#         except:
-#             raise exceptions.InternalServerError()
+@main.route('/events/<int:event_id>',  methods=['PATCH'])
+def updateEvent(event_id):
+    if request.method == 'PATCH':
+        try: 
+            updated_title = request.json['title']
+            updated_activity = request.json['activity']
+            updated_descr = request.json['descr']
+            updated_location = request.json['location']
+            updated_spaces= request.json['spaces']
+            updated_date = request.json['date']
+
+            event = Events.query.get(event_id)
+            
+            event.title = updated_title
+            event.activity = updated_activity
+            event.descr = updated_descr
+            event.location = updated_location
+            event.spaces = updated_spaces
+            event.date = updated_date
+
+            db.session.add(event)
+            db.session.commit()
+            return f"sucessfully updated!", 201
+        except:
+            raise exceptions.InternalServerError()
+
 
 
 # #  get all matches
@@ -200,6 +215,9 @@ def getAllMatches():
     return  jsonify([e.serialize() for e in allMatches])
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+
+
 
 # # get chat 
 # # @main.route('/chat', methods=['GET','POST'])
