@@ -197,11 +197,14 @@ def updateUser(user_id):
             db.session.commit()
             return f"sucessfully updated!", 201
             response.headers.add('Access-Control-Allow-Origin', '*')
+            response.headers.add('Access-Control-Allow-Methods', 'PATCH')
             return response
         except:
             raise exceptions.InternalServerError()
 
 
+
+@cross_origin()
 @main.route('/events/<int:event_id>',  methods=['PATCH'])
 def updateEvent(event_id):
     if request.method == 'PATCH':
@@ -226,7 +229,9 @@ def updateEvent(event_id):
             db.session.commit()
             return f"sucessfully updated!", 201
             response.headers.add('Access-Control-Allow-Origin', '*')
+            response.headers.add('Access-Control-Allow-Methods', 'PATCH')
             return response
+
         except:
             raise exceptions.InternalServerError()
 
