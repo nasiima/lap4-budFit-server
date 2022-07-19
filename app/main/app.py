@@ -15,18 +15,18 @@ def hello():
 
 
 # get all users route
-@cross_origin()
-@main.route('/users', methods=['GET'])
-def getAllUsers():
-    allUsers = Users.query.all()
-    return  jsonify([e.serialize() for e in allUsers])
-
+# @cross_origin()
 # @main.route('/users', methods=['GET'])
 # def getAllUsers():
 #     allUsers = Users.query.all()
 #     return  jsonify([e.serialize() for e in allUsers])
-#     response.headers.add('Access-Control-Allow-Origin', '*')
-#     return response
+
+@main.route('/users', methods=['GET'])
+def getAllUsers():
+    allUsers = Users.query.all()
+    return  jsonify([e.serialize() for e in allUsers])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 # get  user by id and delete user by id
