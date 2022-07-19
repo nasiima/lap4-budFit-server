@@ -84,6 +84,7 @@ def getEventsId(event_id):
 
 
 
+
 #  get matches by id and delete match by id
 @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
 def getMatchesById(match_id):
@@ -148,7 +149,11 @@ def updateEvent(event_id):
             raise exceptions.InternalServerError()
 
 
-
+#  get all matches
+@main.route('/matches', methods=['GET'])
+def getAllMatches():
+    allMatches = Matches.query.all()
+    return  jsonify([e.serialize() for e in allMatches])
 
 # get chat 
 @main.route('/chat', methods=['GET','POST'])
