@@ -15,33 +15,35 @@ def hello():
 
 
 # get all users route
-@cross_origin()
-@main.route('/users', methods=['GET'])
-def getAllUsers():
-    allUsers = Users.query.all()
-    return  jsonify([e.serialize() for e in allUsers])
-
+# @cross_origin()
 # @main.route('/users', methods=['GET'])
 # def getAllUsers():
 #     allUsers = Users.query.all()
 #     return  jsonify([e.serialize() for e in allUsers])
-#     response.headers.add('Access-Control-Allow-Origin', '*')
-#     return response
+
+@main.route('/users', methods=['GET'])
+def getAllUsers():
+    allUsers = Users.query.all()
+    return  jsonify([e.serialize() for e in allUsers])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 # get  user by id and delete user by id
 
+@cross_origin()
 @main.route('/users/<int:user_id>/', methods=['GET', 'DELETE'])
 def getUserById(user_id):
     if request.method == 'GET':
         try: 
             user = Users.query.get_or_404(user_id)
             return  jsonify([user.serialize()])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         except exceptions.NotFound:
             raise exceptions.NotFound("User not found!")
         except:
             raise exceptions.InternalServerError()
-
 
     elif request.method == 'DELETE':
         try: 
@@ -57,42 +59,54 @@ def getUserById(user_id):
             # return 'user by id'
 
 
-
-# get all events 
+@cross_origin()
 @main.route('/events', methods=['GET'])
 def getAllEvents():
     allEvents = Events.query.all()
     return  jsonify([e.serialize() for e in allEvents])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
-    # elif request.method == 'POST':
+# get all events 
+# @cross_origin()
+# @main.route('/events', methods=['GET', 'POST'])
+# def getAllEvents():
+#     if request.method == 'GET':
+#         try: 
+#             allEvents = Events.query.all()
+#             return  jsonify([e.serialize() for e in allEvents])
+#      elif request.method == 'POST':
     #     try:
-    #         req = request.get_json()
-    #         new_event = Products(
-    #             # user_id = req['user_id'],
-    #             activity = req['activity'], 
-    #             title = req['title'],
-    #             descr = req['descr'], 
-    #             location = req['location'],
-    #             spaces = req['spaces'],  
-    #             date = req['date']
-    #         )
-    #         db.session.add(new_event)
-    #         db.session.commit()
-    #         return f"New Event was added!", 201
+    # #         req = request.get_json()
+    # #         new_event = Products(
+    # #             # user_id = req['user_id'],
+    # #             activity = req['activity'], 
+    # #             title = req['title'],
+    # #             descr = req['descr'], 
+    # #             location = req['location'],
+    # #             spaces = req['spaces'],  
+    # #             date = req['date']
+    # #         )
+    # #         db.session.add(new_event)
+    # #         db.session.commit()
+    # #         return f"New Event was added!", 201
 
-    #     except: 
-    #         raise exceptions.InternalServerError()
+    # #     except: 
+    # #         raise exceptions.InternalServerError()
 
 
 
 
 # get  events by id and delete event by id
+@cross_origin()
 @main.route('/events/<int:event_id>/',  methods=['GET', 'DELETE'])
 def getEventsId(event_id):
     if request.method == 'GET':
         try: 
             event = Events.query.get_or_404(event_id)
             return  jsonify([event.serialize()])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         except exceptions.NotFound:
             raise exceptions.NotFound("Event not found!")
         except:
@@ -113,13 +127,16 @@ def getEventsId(event_id):
 
 
 
-#  get matches by id and delete match by id
+
+@cross_origin()
 @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
 def getMatchesById(match_id):
      if request.method == 'GET':
         try: 
             match = Matches.query.get_or_404(match_id)
             return  jsonify([match.serialize()])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         except exceptions.NotFound:
             raise exceptions.NotFound("Match not found!")
         except:
@@ -143,55 +160,58 @@ def getMatchesById(match_id):
 
 
 
-@main.route('/users/<int:user_id>',  methods=['PATCH'])
-def updateUser(user_id):
-    if request.method == 'PATCH':
-        try: 
-            req = request.get_json()
-            print(req)
+# @main.route('/users/<int:user_id>',  methods=['PATCH'])
+# def updateUser(user_id):
+#     if request.method == 'PATCH':
+#         try: 
+#             req = request.get_json()
+#             print(req)
           
-            updated_name = req['updated_name']
-            updated_username = req['updated_username']
-            updated_email = req['updated_email']
-            updated_dob = req['updated_dob']
-            updated_preferences = req['updated_preferences']
-            updated_picture = req['updated_picture']
-            db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.dob: updated_dob, Users.preferences: updated_preferences, Users.picture: updated_picture })
-            db.session.commit()
-            return f"sucessfully updated!", 201
-        except:
-            raise exceptions.InternalServerError()
+#             updated_name = req['updated_name']
+#             updated_username = req['updated_username']
+#             updated_email = req['updated_email']
+#             updated_dob = req['updated_dob']
+#             updated_preferences = req['updated_preferences']
+#             updated_picture = req['updated_picture']
+#             db.session.query(Users).filter(Users.id == user_id).update({Users.name: updated_name, Users.username: updated_username, Users.email: updated_email, Users.dob: updated_dob, Users.preferences: updated_preferences, Users.picture: updated_picture })
+#             db.session.commit()
+#             return f"sucessfully updated!", 201
+#         except:
+#             raise exceptions.InternalServerError()
 
 
-@main.route('/events/<int:event_id>',  methods=['PATCH'])
-def updateEvent(event_id):
-    if request.method == 'PATCH':
-        try: 
-            req = request.get_json()
-            print(req)
-            updated_title = req['updated_title']
-            updated_activity = req['updated_activity']
-            updated_descr = req['updated_descr']
-            updated_location = req['updated_location']
-            updated_spaces= req['updated_spaces']
-            updated_date = req['updated_date']
-            db.session.query(Events).filter(Events.id == event_id).update({Events.title: updated_title, Events.activity: updated_activity, Events.descr: updated_descr, Events.location: updated_location, Events.spaces: updated_spaces, Events.date: updated_date })
-            db.session.commit()
-            return f"sucessfully updated!", 201
-        except:
-            raise exceptions.InternalServerError()
+# @main.route('/events/<int:event_id>',  methods=['PATCH'])
+# def updateEvent(event_id):
+#     if request.method == 'PATCH':
+#         try: 
+#             req = request.get_json()
+#             print(req)
+#             updated_title = req['updated_title']
+#             updated_activity = req['updated_activity']
+#             updated_descr = req['updated_descr']
+#             updated_location = req['updated_location']
+#             updated_spaces= req['updated_spaces']
+#             updated_date = req['updated_date']
+#             db.session.query(Events).filter(Events.id == event_id).update({Events.title: updated_title, Events.activity: updated_activity, Events.descr: updated_descr, Events.location: updated_location, Events.spaces: updated_spaces, Events.date: updated_date })
+#             db.session.commit()
+#             return f"sucessfully updated!", 201
+#         except:
+#             raise exceptions.InternalServerError()
 
 
-#  get all matches
+# #  get all matches
+@cross_origin()
 @main.route('/matches', methods=['GET'])
 def getAllMatches():
     allMatches = Matches.query.all()
     return  jsonify([e.serialize() for e in allMatches])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
-# get chat 
-@main.route('/chat', methods=['GET','POST'])
-def getAllChats():
-    return 'chats'
+# # get chat 
+# # @main.route('/chat', methods=['GET','POST'])
+# # def getAllChats():
+# #     return 'chats'
 
 
 
