@@ -9,7 +9,7 @@ import os
 class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    username = db.Column(db.String(100))
+    username = db.Column(db.String(100), unique=True)
     email = db.Column(db.String(100))
     dob = db.Column(db.Float)
     password_digest = db.Column(db.String(10000))

@@ -126,8 +126,6 @@ def getEventsId(event_id):
 
 
 
-
-
 @cross_origin()
 @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
 def getMatchesById(match_id):
@@ -152,12 +150,6 @@ def getMatchesById(match_id):
             raise exceptions.NotFound("Event not found!")
         except:
             raise exceptions.InternalServerError()
-
-
-
-
-
-
 
 
 @main.route('/users/<int:user_id>',  methods=['PATCH'])
@@ -214,6 +206,7 @@ def updateEvent(event_id):
             raise exceptions.InternalServerError()
 
 
+
 # #  get all matches
 @cross_origin()
 @main.route('/matches', methods=['GET'])
@@ -222,6 +215,9 @@ def getAllMatches():
     return  jsonify([e.serialize() for e in allMatches])
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+
+
 
 # # get chat 
 # # @main.route('/chat', methods=['GET','POST'])
