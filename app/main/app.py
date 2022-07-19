@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from werkzeug import exceptions
 from app.models import   Users, Events, Matches
 from app.extensions import db
@@ -15,16 +15,22 @@ def hello():
 
 
 # get all users route
-@cross-origin()
+@cross_origin()
 @main.route('/users', methods=['GET'])
 def getAllUsers():
     allUsers = Users.query.all()
     return  jsonify([e.serialize() for e in allUsers])
 
+# @main.route('/users', methods=['GET'])
+# def getAllUsers():
+#     allUsers = Users.query.all()
+#     return  jsonify([e.serialize() for e in allUsers])
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
 
 
 # get  user by id and delete user by id
-@cross-origin()
+
 @main.route('/users/<int:user_id>/', methods=['GET', 'DELETE'])
 def getUserById(user_id):
     if request.method == 'GET':
