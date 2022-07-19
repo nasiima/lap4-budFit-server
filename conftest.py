@@ -9,7 +9,3 @@ def api():
     client = app.test_client()
     return client
 
-@pytest.fixture
-def sock():
-    client = socketio.test_client(app)
-    return client

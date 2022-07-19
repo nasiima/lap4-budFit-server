@@ -50,6 +50,7 @@ def login():
         except:
             raise exceptions.InternalServerError()
   
+
 # Registration route
 @auth.route("/auth/register", methods=["POST"])
 def register():
@@ -71,16 +72,12 @@ def register():
                 name = req['name'],
                 username = req['username'],
                 email = req['email'], 
-                age = 0,
+                dob = 12,
                 password_digest = hash,
-                rating = 0,
                 preferences = '',
-                matches = '',
-                events = '',
-                likedby = '',
-                rejected_events = '',
-                chats = '' 
+                picture = '' 
             )
+            
             db.session.add(new_user)
             db.session.commit()
             return jsonify(f"New user was added!"), 201

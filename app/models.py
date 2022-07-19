@@ -4,91 +4,27 @@ import datetime
 import os
 
 
-# class Users(db.Model):
-#     user_id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(64))
-#     username = db.Column(db.String(100))
-#     email = db.Column(db.String(100))
-#     age = db.Column(db.Integer)
-#     password_digest = db.Column(db.String(10000))
-#     preferences =  db.Column(db.PickleType, nullable=True)
-#     # matches = db.Column(db.String(100))
-#     event_id = db.Column(db.String(100), db.ForeignKey('events.id'))
-#     # rejected_events = db.Column(db.String(100))
-#     rating =  db.Column(db.Integer, nullable=False)
-#     chat_id = db.Column(db.String(100), db.ForeignKey('chats.id'))
-#     time = db.Column(db.DateTime, nullable=False)
-
-
-
-#     def __init__(self, name, username, email, age, password_digest, preferences, event_id, rating, chat_id, time):
-#         self.name = name
-#         self.username = username
-#         self.email = email
-#         self.age = age
-#         self.password_digest = password_digest
-#         self.preferences = preferences
-#         # self.matches = matches
-#         self.event_id= event_id
-#         self.rating = rating
-#         self.chat_id= chat_id
-#         self.time = time
-    
-#     def __repr__(self):
-#         return '<id {}>'.format(self.user_id)
-    
-#     def serialize(self):
-#         return {
-#             'user_id': self.user_id,
-#             'name': self.name, 
-#             'username': self.username, 
-#             'email': self.email,
-#             'age': self.age,
-#             'password_digest': self.password_digest,
-#             'preferences': self.preferences,
-#             'event_id': self.event_id,
-#             'rating': self.rating,
-#             'chat_id': self.chat_id,
-#             # 'matches': self.matches,
-#             'time': self.time
-#         }
+# make username unique 
 
 class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    username = db.Column(db.String(100))
+    username = db.Column(db.String(100), unique=True)
     email = db.Column(db.String(100))
-    age = db.Column(db.Integer)
+    dob = db.Column(db.Float)
     password_digest = db.Column(db.String(10000))
-    preferences = db.Column(db.String(100))
-    # # (user_id)
-    likedby = db.Column(db.String(100))
-    #   # (user_id)
-    matches = db.Column(db.String(100))
-    #   # (user_id)
-    events = db.Column(db.String(100))
-    # # (event_id)
-    rejected_events = db.Column(db.String(100))
-    rating = db.Column(db.String(100))
-    #   #     Ratings - Array(Int)
-    chats = db.Column(db.String(100))
-    # # chat_id
-  
+    preferences =  db.Column(db.String(140))
+    picture = db.Column(db.String(10000))
 
-
-    def __init__(self, name, username, email, age, password_digest, preferences, likedby,  matches, events, rejected_events, rating, chats):
+    def __init__(self, name, username, email, dob, password_digest, preferences, picture):
         self.name = name
         self.username = username
         self.email = email
-        self.age = age
+        self.dob = dob
         self.password_digest = password_digest
-        self.rating = rating
         self.preferences = preferences
-        self.likedby = likedby 
-        self.matches = matches
-        self.events = events
-        self.rejected_events = rejected_events
-        self.chats = chats
+        self.picture = picture
+    
     
     def __repr__(self):
         return '<id {}>'.format(self.user_id)
@@ -99,16 +35,12 @@ class Users(db.Model):
             'name': self.name, 
             'username': self.username, 
             'email': self.email,
-            'age': self.age,
+            'dob': self.dob,
             'password_digest': self.password_digest,
-            'rating': self.rating,
             'preferences': self.preferences,
-            'likedby': self.likedby,
-            'matches': self.matches,
-            'events': self.events,
-            'rejected_events': self.rejected_events,
-            'chats': self.chats
+            'picture': self.picture
         }
+
         
     def encode_auth_token(self, username):
         """
@@ -147,108 +79,114 @@ class Users(db.Model):
 
 
 
-
-
-
-
-
-
-
-
-
-
 class Events(db.Model):
     event_id = db.Column(db.Integer, primary_key=True)
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    title =  db.Column(db.String(140))
     activity = db.Column(db.String(64))
     descr = db.Column(db.String(100))
     location = db.Column(db.String(64))
     spaces = db.Column(db.Integer)
-    age = db.Column(db.Integer)
-    pic = db.Column(db.String(64))
-    skilllevel = db.Column(db.String(64))
-    time = db.Column(db.DateTime, nullable=False)
-    lookingfor = db.Column(db.String(64))
-    partysize = db.Column(db.String(64))
+    date = db.Column(db.Date)
 
-    # def __init__(self,  user_id, activity, descr, location, spaces, age, pic, skilllevel, time, lookingfor, partysize ):
-    def __init__(self, activity, descr, location, spaces, age, pic, skilllevel, time, lookingfor, partysize ):
-        # self.user_id = user_id
+    def __init__(self, activity, title, descr, location, spaces, date ):
         self.activity = activity
+        self.title = title
         self.descr = descr
         self.location = location
         self.spaces = spaces 
-        self.age = age
-        self.pic = pic
-        self.skilllevel = skilllevel
-        self.time = time
-        self.lookingfor = lookingfor
-        self.partysize = partysize
+        self.date = date
+
     
     def __repr__(self):
         return '<id {}>'.format(self.event_id)
     
     def serialize(self):
         return {
-    #    'user_id': self.user_id,
        'event_id': self.event_id,
+        'title': self.title,
        'activity': self.activity,
        'descr': self.descr,
        'location': self.location,
        'spaces': self.spaces,
-       'age': self.age,
-       'pic': self.pic,
-       'skilllevel': self.skilllevel,
-       'time': self.time,
-       'lookingfor': self.lookingfor,
-       'partysize': self.partysize 
+       'date': self.date
         }
 
 
 
-
-class Chats(db.Model):
-    chat_id = db.Column(db.Integer, primary_key=True)
-    messages = db.Column(db.Integer, db.ForeignKey('message.id'))
-
-
-    def __init__(self, chat_id, messages):
-        self.chat_id = chat_id
-        self.messages = messages
-
-    def __repr__(self):
-        return '<id {}>'.format(self.chat_id)
-    
-    def serialize(self):
-        return {
-            'chat_id': self.chat_id, 
-            'messages': self.messages
-        }
-
-
-
-class Messages(db.Model):
-    message_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comment = db.Column(db.String(140))
-    time = db.Column(db.DateTime, nullable=False)
+class Matches(db.Model):
+    match_id = db.Column(db.Integer, primary_key=True)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
 
     def __init__(self, chat_id, messages):
-        self.message_id =  message_id
+        self.event_id = event_id
         self.user_id = user_id
-        self.comment = comment
-        self.time = time
 
     def __repr__(self):
-        return '<id {}>'.format(self.chat_id)
+        return '<id {}>'.format(self.match_id)
     
     def serialize(self):
         return {
-            'message_id': self.message_id, 
-            'user_id': self.user_id,
-            'comment': self.comment,
-            'time': self.time
+            'match_id': self.match_id, 
+            'event_id': self.event_id, 
+            'user_id': self.user_id
         }
+
+
+
+
+
+
+
+
+
+
+
+
+# class Chats(db.Model):
+#     chat_id = db.Column(db.Integer, primary_key=True)
+#     messages = db.Column(db.Integer, db.ForeignKey('messages.message_id'))
+
+
+#     def __init__(self, chat_id, messages):
+#         self.chat_id = chat_id
+#         self.messages = messages
+
+#     def __repr__(self):
+#         return '<id {}>'.format(self.chat_id)
+    
+#     def serialize(self):
+#         return {
+#             'chat_id': self.chat_id, 
+#             'messages': self.messages
+#         }
+
+
+
+
+# class Messages(db.Model):
+#     message_id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+#     comment = db.Column(db.String(140))
+#     time = db.Column(db.DateTime, nullable=False)
+
+
+#     def __init__(self, chat_id, messages):
+#         self.message_id =  message_id
+#         self.user_id = user_id
+#         self.comment = comment
+#         self.time = time
+
+#     def __repr__(self):
+#         return '<id {}>'.format(self.message_id)
+    
+#     def serialize(self):
+#         return {
+#             'message_id': self.message_id, 
+#             'user_id': self.user_id,
+#             'comment': self.comment,
+#             'time': self.time
+#         }
 
   
