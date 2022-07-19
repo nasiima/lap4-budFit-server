@@ -251,3 +251,4 @@ class Messages(db.Model):
             'time': self.time
         }
 
+  
