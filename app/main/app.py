@@ -171,6 +171,8 @@ def getMatchesById(match_id):
             raise exceptions.InternalServerError()
 
 
+
+@cross_origin()
 @main.route('/users/<int:user_id>',  methods=['PATCH'])
 def updateUser(user_id):
     if request.method == 'PATCH':
@@ -194,6 +196,8 @@ def updateUser(user_id):
             db.session.add(thisUser)
             db.session.commit()
             return f"sucessfully updated!", 201
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         except:
             raise exceptions.InternalServerError()
 
@@ -221,6 +225,8 @@ def updateEvent(event_id):
             db.session.add(event)
             db.session.commit()
             return f"sucessfully updated!", 201
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         except:
             raise exceptions.InternalServerError()
 
