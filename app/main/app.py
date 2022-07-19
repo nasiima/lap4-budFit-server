@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from werkzeug import exceptions
 from app.models import   Users, Events, Matches
 from app.extensions import db
@@ -15,14 +15,22 @@ def hello():
 
 
 # get all users route
+@cross_origin()
 @main.route('/users', methods=['GET'])
 def getAllUsers():
     allUsers = Users.query.all()
     return  jsonify([e.serialize() for e in allUsers])
 
+# @main.route('/users', methods=['GET'])
+# def getAllUsers():
+#     allUsers = Users.query.all()
+#     return  jsonify([e.serialize() for e in allUsers])
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
 
 
 # get  user by id and delete user by id
+
 @main.route('/users/<int:user_id>/', methods=['GET', 'DELETE'])
 def getUserById(user_id):
     if request.method == 'GET':
@@ -51,10 +59,32 @@ def getUserById(user_id):
 
 
 # get all events 
-@main.route('/events', methods=['GET'])
+@main.route('/events', methods=['GET', 'POST'])
 def getAllEvents():
-    allEvents = Events.query.all()
+    if request.method == 'GET':
+        try:
+            allEvents = Events.query.all()
     return  jsonify([e.serialize() for e in allEvents])
+
+    elif request.method == 'POST':
+        try:
+            req = request.get_json()
+            new_event = Products(
+                # user_id = req['user_id'],
+                activity = req['activity'], 
+                title = req['title'],
+                descr = req['descr'], 
+                location = req['location'],
+                spaces = req['spaces'],  
+                date = req['date']
+            )
+            db.session.add(new_event)
+            db.session.commit()
+            return f"New Event was added!", 201
+
+        except: 
+            raise exceptions.InternalServerError()
+
 
 
 
@@ -107,6 +137,11 @@ def getMatchesById(match_id):
             raise exceptions.NotFound("Event not found!")
         except:
             raise exceptions.InternalServerError()
+
+
+
+
+
 
 
 
