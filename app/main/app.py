@@ -59,6 +59,25 @@ def getUserById(user_id):
             # return 'user by id'
 
 
+
+#  get by username
+@cross_origin()
+@main.route('/users/<username>/', methods=['GET'])
+def getUserByUsername(username):
+     if request.method == 'GET':
+        try: 
+            user = Users.query.filter_by(username=username).first()
+            return  jsonify([user.serialize()])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+        except exceptions.NotFound:
+            raise exceptions.NotFound("User not found!")
+        except:
+            raise exceptions.InternalServerError()
+
+
+
+
 @cross_origin()
 @main.route('/events', methods=['GET', 'POST'])
 def getAllEvents():
