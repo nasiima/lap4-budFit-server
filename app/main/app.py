@@ -126,8 +126,6 @@ def getEventsId(event_id):
 
 
 
-
-
 @cross_origin()
 @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
 def getMatchesById(match_id):
@@ -152,11 +150,6 @@ def getMatchesById(match_id):
             raise exceptions.NotFound("Event not found!")
         except:
             raise exceptions.InternalServerError()
-
-
-
-
-
 
 
 
