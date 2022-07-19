@@ -31,6 +31,7 @@ def getAllUsers():
 
 # get  user by id and delete user by id
 
+@cross_origin()
 @main.route('/users/<int:user_id>/', methods=['GET', 'DELETE'])
 def getUserById(user_id):
     if request.method == 'GET':
@@ -59,6 +60,7 @@ def getUserById(user_id):
 
 
 # get all events 
+@cross_origin()
 @main.route('/events', methods=['GET'])
 def getAllEvents():
     allEvents = Events.query.all()
@@ -87,6 +89,7 @@ def getAllEvents():
 
 
 # get  events by id and delete event by id
+@cross_origin()
 @main.route('/events/<int:event_id>/',  methods=['GET', 'DELETE'])
 def getEventsId(event_id):
     if request.method == 'GET':
@@ -114,6 +117,7 @@ def getEventsId(event_id):
 
 
 #  get matches by id and delete match by id
+@cross_origin()
 @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
 def getMatchesById(match_id):
      if request.method == 'GET':
@@ -183,15 +187,16 @@ def updateEvent(event_id):
 
 
 #  get all matches
+@cross_origin()
 @main.route('/matches', methods=['GET'])
 def getAllMatches():
     allMatches = Matches.query.all()
     return  jsonify([e.serialize() for e in allMatches])
 
 # get chat 
-@main.route('/chat', methods=['GET','POST'])
-def getAllChats():
-    return 'chats'
+# @main.route('/chat', methods=['GET','POST'])
+# def getAllChats():
+#     return 'chats'
 
 
 
