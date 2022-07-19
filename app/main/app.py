@@ -64,6 +64,8 @@ def getUserById(user_id):
 def getAllEvents():
     allEvents = Events.query.all()
     return  jsonify([e.serialize() for e in allEvents])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 # get all events 
 # @cross_origin()
@@ -103,6 +105,8 @@ def getEventsId(event_id):
         try: 
             event = Events.query.get_or_404(event_id)
             return  jsonify([event.serialize()])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         except exceptions.NotFound:
             raise exceptions.NotFound("Event not found!")
         except:
@@ -131,6 +135,8 @@ def getMatchesById(match_id):
         try: 
             match = Matches.query.get_or_404(match_id)
             return  jsonify([match.serialize()])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         except exceptions.NotFound:
             raise exceptions.NotFound("Match not found!")
         except:
@@ -199,6 +205,8 @@ def getMatchesById(match_id):
 def getAllMatches():
     allMatches = Matches.query.all()
     return  jsonify([e.serialize() for e in allMatches])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 # # get chat 
 # # @main.route('/chat', methods=['GET','POST'])
