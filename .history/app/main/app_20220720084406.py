@@ -14,7 +14,7 @@ def hello():
     return "<h1>Hello world</h1>"
 
 
-# GET all users
+
 @main.route('/users', methods=['GET'])
 def getAllUsers():
     allUsers = Users.query.all()
@@ -23,7 +23,8 @@ def getAllUsers():
     return response
 
 
-# GET, DELETE, PATCH user by id 
+# get  user by id and delete user by id
+
 @cross_origin()
 @main.route('/users/<int:user_id>/', methods=['GET', 'DELETE', 'PATCH'])
 def getUserById(user_id):
@@ -76,10 +77,11 @@ def getUserById(user_id):
             raise exceptions.NotFound("User not found!")
         except:
             raise exceptions.InternalServerError()
-    
+            # return 'user by id'
 
 
-#  GET user by username
+
+#  get by username
 @cross_origin()
 @main.route('/users/<username>/', methods=['GET'])
 def getUserByUsername(username):
@@ -95,7 +97,8 @@ def getUserByUsername(username):
             raise exceptions.InternalServerError()
 
 
-# GET all events
+
+
 @cross_origin()
 @main.route('/events', methods=['GET'])
 def getAllEvents():
@@ -105,7 +108,8 @@ def getAllEvents():
     return response
 
 
-# GET, PATCH, DELETE events by id
+# get  events by id and delete event by id
+@cross_origin()
 @main.route('/events/<int:event_id>/',  methods=['GET', 'DELETE', 'PATCH'])
 def getEventsId(event_id):
     if request.method == 'GET':
@@ -139,8 +143,8 @@ def getEventsId(event_id):
             db.session.add(event)
             db.session.commit()
             return f"sucessfully updated!", 201
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            response.headers.add('Access-Control-Allow-Methods', 'PATCH')
+            # response.headers.add('Access-Control-Allow-Origin', '*')
+            # response.headers.add('Access-Control-Allow-Methods', 'PATCH')
             return response
         except:
             raise exceptions.InternalServerError()
@@ -157,7 +161,8 @@ def getEventsId(event_id):
             raise exceptions.InternalServerError()
 
 
-# GET, DELETE matches by id
+
+
 @cross_origin()
 @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
 def getMatchesById(match_id):
@@ -183,14 +188,6 @@ def getMatchesById(match_id):
         except:
             raise exceptions.InternalServerError()
 
-# GET all matches
-@cross_origin()
-@main.route('/matches', methods=['GET'])
-def getAllMatches():
-    allMatches = Matches.query.all()
-    return  jsonify([e.serialize() for e in allMatches])
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
 
 
 # @cross_origin()
@@ -225,36 +222,47 @@ def getAllMatches():
 
 
 
-# @cross_origin()
-# @main.route('/events/<int:event_id>',  methods=['PATCH'])
-# def updateEvent(event_id):
-#     if request.method == 'PATCH':
-#         try: 
-#             updated_title = request.json['title']
-#             updated_activity = request.json['activity']
-#             updated_descr = request.json['descr']
-#             updated_location = request.json['location']
-#             updated_spaces= request.json['spaces']
-#             updated_date = request.json['date']
+@cross_origin()
+@main.route('/events/<int:event_id>',  methods=['PATCH'])
+def updateEvent(event_id):
+    if request.method == 'PATCH':
+        try: 
+            updated_title = request.json['title']
+            updated_activity = request.json['activity']
+            updated_descr = request.json['descr']
+            updated_location = request.json['location']
+            updated_spaces= request.json['spaces']
+            updated_date = request.json['date']
 
-#             event = Events.query.get(event_id)
+            event = Events.query.get(event_id)
             
-#             event.title = updated_title
-#             event.activity = updated_activity
-#             event.descr = updated_descr
-#             event.location = updated_location
-#             event.spaces = updated_spaces
-#             event.date = updated_date
+            event.title = updated_title
+            event.activity = updated_activity
+            event.descr = updated_descr
+            event.location = updated_location
+            event.spaces = updated_spaces
+            event.date = updated_date
 
-#             db.session.add(event)
-#             db.session.commit()
-#             return f"sucessfully updated!", 201
-#             response.headers.add('Access-Control-Allow-Origin', '*')
-#             response.headers.add('Access-Control-Allow-Methods', 'PATCH')
-#             return response
+            db.session.add(event)
+            db.session.commit()
+            return f"sucessfully updated!", 201
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            response.headers.add('Access-Control-Allow-Methods', 'PATCH')
+            return response
 
-#         except:
-#             raise exceptions.InternalServerError()
+        except:
+            raise exceptions.InternalServerError()
+
+
+
+# #  get all matches
+@cross_origin()
+@main.route('/matches', methods=['GET'])
+def getAllMatches():
+    allMatches = Matches.query.all()
+    return  jsonify([e.serialize() for e in allMatches])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 
@@ -263,6 +271,10 @@ def getAllMatches():
 # # @main.route('/chat', methods=['GET','POST'])
 # # def getAllChats():
 # #     return 'chats'
+
+
+
+
 
 
 

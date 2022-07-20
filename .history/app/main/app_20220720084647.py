@@ -183,7 +183,7 @@ def getMatchesById(match_id):
         except:
             raise exceptions.InternalServerError()
 
-# GET all matches
+# #  get all matches
 @cross_origin()
 @main.route('/matches', methods=['GET'])
 def getAllMatches():
@@ -255,6 +255,9 @@ def getAllMatches():
 
 #         except:
 #             raise exceptions.InternalServerError()
+
+
+
 
 
 

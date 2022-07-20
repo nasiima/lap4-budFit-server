@@ -183,14 +183,6 @@ def getMatchesById(match_id):
         except:
             raise exceptions.InternalServerError()
 
-# GET all matches
-@cross_origin()
-@main.route('/matches', methods=['GET'])
-def getAllMatches():
-    allMatches = Matches.query.all()
-    return  jsonify([e.serialize() for e in allMatches])
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
 
 
 # @cross_origin()
@@ -255,6 +247,17 @@ def getAllMatches():
 
 #         except:
 #             raise exceptions.InternalServerError()
+
+
+
+# #  get all matches
+@cross_origin()
+@main.route('/matches', methods=['GET'])
+def getAllMatches():
+    allMatches = Matches.query.all()
+    return  jsonify([e.serialize() for e in allMatches])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 

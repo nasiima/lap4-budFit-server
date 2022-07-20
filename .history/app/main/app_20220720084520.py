@@ -14,7 +14,7 @@ def hello():
     return "<h1>Hello world</h1>"
 
 
-# GET all users
+
 @main.route('/users', methods=['GET'])
 def getAllUsers():
     allUsers = Users.query.all()
@@ -79,7 +79,7 @@ def getUserById(user_id):
     
 
 
-#  GET user by username
+#  get by username
 @cross_origin()
 @main.route('/users/<username>/', methods=['GET'])
 def getUserByUsername(username):
@@ -95,7 +95,7 @@ def getUserByUsername(username):
             raise exceptions.InternalServerError()
 
 
-# GET all events
+
 @cross_origin()
 @main.route('/events', methods=['GET'])
 def getAllEvents():
@@ -105,7 +105,8 @@ def getAllEvents():
     return response
 
 
-# GET, PATCH, DELETE events by id
+# get  events by id and delete event by id
+@cross_origin()
 @main.route('/events/<int:event_id>/',  methods=['GET', 'DELETE', 'PATCH'])
 def getEventsId(event_id):
     if request.method == 'GET':
@@ -157,7 +158,7 @@ def getEventsId(event_id):
             raise exceptions.InternalServerError()
 
 
-# GET, DELETE matches by id
+
 @cross_origin()
 @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
 def getMatchesById(match_id):
@@ -183,14 +184,6 @@ def getMatchesById(match_id):
         except:
             raise exceptions.InternalServerError()
 
-# GET all matches
-@cross_origin()
-@main.route('/matches', methods=['GET'])
-def getAllMatches():
-    allMatches = Matches.query.all()
-    return  jsonify([e.serialize() for e in allMatches])
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
 
 
 # @cross_origin()
@@ -255,6 +248,17 @@ def getAllMatches():
 
 #         except:
 #             raise exceptions.InternalServerError()
+
+
+
+# #  get all matches
+@cross_origin()
+@main.route('/matches', methods=['GET'])
+def getAllMatches():
+    allMatches = Matches.query.all()
+    return  jsonify([e.serialize() for e in allMatches])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 

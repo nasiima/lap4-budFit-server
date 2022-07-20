@@ -14,7 +14,7 @@ def hello():
     return "<h1>Hello world</h1>"
 
 
-# GET all users
+
 @main.route('/users', methods=['GET'])
 def getAllUsers():
     allUsers = Users.query.all()
@@ -23,7 +23,8 @@ def getAllUsers():
     return response
 
 
-# GET, DELETE, PATCH user by id 
+# get  user by id and delete user by id
+
 @cross_origin()
 @main.route('/users/<int:user_id>/', methods=['GET', 'DELETE', 'PATCH'])
 def getUserById(user_id):
@@ -76,10 +77,11 @@ def getUserById(user_id):
             raise exceptions.NotFound("User not found!")
         except:
             raise exceptions.InternalServerError()
-    
+            # return 'user by id'
 
 
-#  GET user by username
+
+#  get by username
 @cross_origin()
 @main.route('/users/<username>/', methods=['GET'])
 def getUserByUsername(username):
@@ -95,7 +97,8 @@ def getUserByUsername(username):
             raise exceptions.InternalServerError()
 
 
-# GET all events
+
+
 @cross_origin()
 @main.route('/events', methods=['GET'])
 def getAllEvents():
@@ -105,7 +108,8 @@ def getAllEvents():
     return response
 
 
-# GET, PATCH, DELETE events by id
+# get  events by id and delete event by id
+@cross_origin()
 @main.route('/events/<int:event_id>/',  methods=['GET', 'DELETE', 'PATCH'])
 def getEventsId(event_id):
     if request.method == 'GET':
@@ -157,7 +161,8 @@ def getEventsId(event_id):
             raise exceptions.InternalServerError()
 
 
-# GET, DELETE matches by id
+
+
 @cross_origin()
 @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
 def getMatchesById(match_id):
@@ -183,14 +188,6 @@ def getMatchesById(match_id):
         except:
             raise exceptions.InternalServerError()
 
-# GET all matches
-@cross_origin()
-@main.route('/matches', methods=['GET'])
-def getAllMatches():
-    allMatches = Matches.query.all()
-    return  jsonify([e.serialize() for e in allMatches])
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
 
 
 # @cross_origin()
@@ -258,11 +255,26 @@ def getAllMatches():
 
 
 
+# #  get all matches
+@cross_origin()
+@main.route('/matches', methods=['GET'])
+def getAllMatches():
+    allMatches = Matches.query.all()
+    return  jsonify([e.serialize() for e in allMatches])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
+
 
 # # get chat 
 # # @main.route('/chat', methods=['GET','POST'])
 # # def getAllChats():
 # #     return 'chats'
+
+
+
+
 
 
 
