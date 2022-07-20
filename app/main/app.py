@@ -21,7 +21,7 @@ def hello():
 @main.route('/users', methods=['GET'])
 def getAllUsers():
     allUsers = Users.query.all()
-    return  jsonify([e.serialize() for e in allUsers])
+    response = jsonify([e.serialize() for e in allUsers])
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -33,7 +33,7 @@ def getUserById(user_id):
     if request.method == 'GET':
         try: 
             user = Users.query.get_or_404(user_id)
-            return  jsonify([user.serialize()])
+            response = jsonify([user.serialize()])
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
         except exceptions.NotFound:
@@ -61,7 +61,7 @@ def getUserById(user_id):
             
             db.session.add(thisUser)
             db.session.commit()
-            return f"sucessfully updated!", 201
+            response = f"sucessfully updated!", 201
             response.headers.add('Access-Control-Allow-Origin', '*')
             response.headers.add('Access-Control-Allow-Methods', 'PATCH')
             return response
@@ -89,7 +89,7 @@ def getUserByUsername(username):
      if request.method == 'GET':
         try: 
             user = Users.query.filter_by(username=username).first()
-            return  jsonify([user.serialize()])
+            response = jsonify([user.serialize()])
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
         except exceptions.NotFound:
@@ -105,7 +105,7 @@ def getAllEvents():
     if request.method == 'GET':
         try:
             allEvents = Events.query.all()
-            return  jsonify([e.serialize() for e in allEvents])
+            response = jsonify([e.serialize() for e in allEvents])
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
         except exceptions.NotFound:
@@ -141,7 +141,7 @@ def getEventsId(event_id):
     if request.method == 'GET':
         try: 
             event = Events.query.get_or_404(event_id)
-            return  jsonify([event.serialize()])
+            response = jsonify([event.serialize()])
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
         except exceptions.NotFound:
@@ -168,7 +168,7 @@ def getEventsId(event_id):
 
             db.session.add(event)
             db.session.commit()
-            return f"sucessfully updated!", 201
+            response = f"sucessfully updated!", 201
             response.headers.add('Access-Control-Allow-Origin', '*')
             response.headers.add('Access-Control-Allow-Methods', 'PATCH')
             return response
@@ -194,7 +194,7 @@ def getMatchesById(match_id):
      if request.method == 'GET':
         try: 
             match = Matches.query.get_or_404(match_id)
-            return  jsonify([match.serialize()])
+            response =  jsonify([match.serialize()])
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
         except exceptions.NotFound:
@@ -218,7 +218,7 @@ def getMatchesById(match_id):
 @main.route('/matches', methods=['GET'])
 def getAllMatches():
     allMatches = Matches.query.all()
-    return  jsonify([e.serialize() for e in allMatches])
+    response = jsonify([e.serialize() for e in allMatches])
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
