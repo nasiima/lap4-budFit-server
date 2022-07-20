@@ -52,7 +52,6 @@ def getUserById(user_id):
 
             thisUser = Users.query.get(user_id)
 
-            thisUser.name = updated_name
             thisUser.username = updated_username
             thisUser.email = updated_email
             thisUser.dob = updated_dob
