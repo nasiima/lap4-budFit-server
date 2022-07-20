@@ -200,48 +200,31 @@ def getMatchesById(match_id):
         except:
             raise exceptions.InternalServerError()
 
-@main.route('/events/<int:event_id>/',  methods=['PATCH'])
-def updateEvent(event_id):
-    if request.method == 'PATCH':
-        try: 
-            updated_title = request.json['title']
-            updated_activity = request.json['activity']
-            updated_descr = request.json['descr']
-            updated_location = request.json['location']
-            updated_spaces= request.json['spaces']
-            updated_date = request.json['date']
+# @main.route('/events/<int:event_id>/',  methods=['PATCH'])
+# def updateEvent(event_id):
+#     if request.method == 'PATCH':
+#         try: 
+#             updated_title = request.json['title']
+#             updated_activity = request.json['activity']
+#             updated_descr = request.json['descr']
+#             updated_location = request.json['location']
+#             updated_spaces= request.json['spaces']
+#             updated_date = request.json['date']
 
-            event = Events.query.get(event_id)
+#             event = Events.query.get(event_id)
 
-            event.serialize()
-            print(event.title)
-            print(event.activity)
-            print(event.descr)
-            print(event.location)
-            print(event.spaces)
-            print(event.date)
-
-            event.title = updated_title
-            event.activity = updated_activity
-            event.descr = updated_descr
-            event.location = updated_location
-            event.spaces = updated_spaces
-            event.date = updated_date
-            
-            print(event)
-            print(event.title)
-            print(event.activity)
-            print(event.descr)
-            print(event.location)
-            print(event.spaces)
-            print(event.date)
-
-            db.session.add(event)
-            db.session.commit()
-            return f"sucessfully updated!", 201
-        except:
-            raise exceptions.InternalServerError()
-
+#             event.title = updated_title
+#             event.activity = updated_activity
+#             event.descr = updated_descr
+#             event.location = updated_location
+#             event.spaces = updated_spaces
+#             event.date = updated_date
+        
+#             db.session.add(event)
+#             db.session.commit()
+#             return f"sucessfully updated!", 201
+#         except:
+#             raise exceptions.InternalServerError()
 
 
 # #  get all matches
@@ -254,6 +237,31 @@ def getAllMatches():
     return response
 
 
+# GET, DELETE matches by id
+# @cross_origin()
+# @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
+# def getMatchesById(match_id):
+#      if request.method == 'GET':
+#         try: 
+#             match = Matches.query.get_or_404(match_id)
+#             response =  jsonify([match.serialize()])
+#             response.headers.add('Access-Control-Allow-Origin', '*')
+#             return response
+#         except exceptions.NotFound:
+#             raise exceptions.NotFound("Match not found!")
+#         except:
+#             raise exceptions.InternalServerError()
+    
+#      elif request.method == 'DELETE':
+#         try: 
+#             match = Matches.query.get_or_404(match_id)
+#             db.session.delete(match)
+#             db.session.commit()
+#             return f"Event was sucessfully deleted!", 204
+#         except exceptions.NotFound:
+#             raise exceptions.NotFound("Event not found!")
+#         except:
+#             raise exceptions.InternalServerError()
 
 
 @main.errorhandler(exceptions.NotFound)
