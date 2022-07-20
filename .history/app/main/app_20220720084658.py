@@ -97,30 +97,12 @@ def getUserByUsername(username):
 
 # GET all events
 @cross_origin()
-@main.route('/events', methods=['GET', 'POST'])
+@main.route('/events', methods=['GET'])
 def getAllEvents():
-    if request.method == 'GET':
-        allEvents = Events.query.all()
-        return  jsonify([e.serialize() for e in allEvents])
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
-    elif request.method == 'POST':
-        try:
-            req = request.get_json()
-            print(req)
-            new_event = Events(
-                activity = req['activity'], 
-                title = req['title'],
-                descr = req['descr'], 
-                location = req['location'],
-                spaces = req['spaces'],  
-                date = req['date']
-            )
-            db.session.add(new_event)
-            db.session.commit()
-            return f"New Event was added!", 201
-
+    allEvents = Events.query.all()
+    return  jsonify([e.serialize() for e in allEvents])
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 # GET, PATCH, DELETE events by id
@@ -273,6 +255,9 @@ def getAllMatches():
 
 #         except:
 #             raise exceptions.InternalServerError()
+
+
+
 
 
 
