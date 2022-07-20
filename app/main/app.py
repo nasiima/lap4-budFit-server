@@ -25,7 +25,7 @@ def getAllUsers():
 
 # get  user by id and delete user by id
 @cross_origin()
-@main.route('/users/<int:user_id>', methods=['GET', 'DELETE', 'PATCH', 'OPTIONS'])
+@main.route('/users/<int:user_id>/', methods=['GET', 'DELETE', 'PATCH', 'OPTIONS'])
 def getUserById(user_id):
     if request.method == 'GET':
         try: 
@@ -200,7 +200,7 @@ def getMatchesById(match_id):
         except:
             raise exceptions.InternalServerError()
 
-@main.route('/events/<int:event_id>',  methods=['PATCH'])
+@main.route('/events/<int:event_id>/',  methods=['PATCH'])
 def updateEvent(event_id):
     if request.method == 'PATCH':
         try: 
