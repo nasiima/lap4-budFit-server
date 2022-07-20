@@ -1,4 +1,4 @@
-from app.models import Users, Events
+from app.models import Users, Events, Matches
 
 
 def test_new_user_with_fixture():
@@ -16,10 +16,6 @@ def test_new_user_with_fixture():
     assert user.preferences == 'football'
     assert user.picture == 'image'
 
-    
-
-
-
 def test_new_event_with_fixture():
     """
     GIVEN a Events model
@@ -35,4 +31,14 @@ def test_new_event_with_fixture():
     assert event.date == 'today'
 
 
+def test_new_match_with_fixture():
+    """
+    GIVEN a Match model
+    WHEN a new Match is created
+    THEN check the match, event, and user id are defined correctly
+    """
 
+    match = Matches('1','2','3')
+    assert match.match_id == '1'
+    assert match.event_id == '2'
+    assert match.user_id == '3'

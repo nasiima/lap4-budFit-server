@@ -1,4 +1,4 @@
-from app.models import Events, Users
+from app.models import Events, Users, Matches
 from app import create_app
 import pytest
 
@@ -19,3 +19,9 @@ def new_user():
 def new_event():
     event = Events('football', 'casual', 'London')
     return event
+
+
+@pytest.fixture(scope='module')
+def new_Match():
+    match = Matches('1', '2', '3')
+    return match
