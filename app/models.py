@@ -88,7 +88,7 @@ class Events(db.Model):
     spaces = db.Column(db.Integer)
     date = db.Column(db.Date)
 
-    def __init__(self, activity, title, descr, location, spaces, date ):
+    def __init__(self, activity, descr, title, location, spaces, date ):
         self.activity = activity
         self.title = title
         self.descr = descr
@@ -119,7 +119,7 @@ class Matches(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
 
-    def __init__(self, event_id, user_id):
+    def __init__(self, chat_id, messages):
         self.event_id = event_id
         self.user_id = user_id
 
