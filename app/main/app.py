@@ -6,7 +6,10 @@ from app.models import   Users, Events, Matches
 from app.extensions import db
 
 main = Blueprint('main', __name__) 
-CORS(main)
+CORS(main, resources={r"/*": {"origins": "*"}})
+
+main.config['CORS_HEADERS'] = 'Content-Type'
+
 
 
 @main.route("/")
