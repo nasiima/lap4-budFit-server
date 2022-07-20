@@ -18,6 +18,7 @@ def hello():
 
 
 # GET all users
+@cross_origin()
 @main.route('/users', methods=['GET'])
 def getAllUsers():
     allUsers = Users.query.all()
@@ -62,8 +63,11 @@ def getUserById(user_id):
             db.session.add(thisUser)
             db.session.commit()
             response = f"sucessfully updated!", 201
-            response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            # response.header("Access-Control-Allow-Origin", "*");
+            # response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            response.header('Access-Control-Allow-Origin: *');
+            response.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+            response.header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
             return response
         except:
             raise exceptions.InternalServerError()
@@ -136,6 +140,7 @@ def getAllEvents():
 
 
 # GET, PATCH, DELETE events by id
+@cross_origin()
 @main.route('/events/<int:event_id>/',  methods=['GET', 'DELETE', 'PATCH'])
 def getEventsId(event_id):
     if request.method == 'GET':
@@ -169,9 +174,11 @@ def getEventsId(event_id):
             db.session.add(event)
             db.session.commit()
             response = f"sucessfully updated!", 201
-            response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            response.header('Access-Control-Allow-Origin: *');
+            response.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+            response.header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
             return response
+     
         except:
             raise exceptions.InternalServerError()
 
