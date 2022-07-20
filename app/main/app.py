@@ -62,8 +62,8 @@ def getUserById(user_id):
             db.session.add(thisUser)
             db.session.commit()
             response = f"sucessfully updated!", 201
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            response.headers.add('Access-Control-Allow-Methods', 'PATCH')
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             return response
         except:
             raise exceptions.InternalServerError()
@@ -169,8 +169,8 @@ def getEventsId(event_id):
             db.session.add(event)
             db.session.commit()
             response = f"sucessfully updated!", 201
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            response.headers.add('Access-Control-Allow-Methods', 'PATCH')
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             return response
         except:
             raise exceptions.InternalServerError()
