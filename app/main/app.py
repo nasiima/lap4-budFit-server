@@ -100,11 +100,15 @@ def getUserByUsername(username):
 @main.route('/events', methods=['GET', 'POST'])
 def getAllEvents():
     if request.method == 'GET':
-        allEvents = Events.query.all()
-        return  jsonify([e.serialize() for e in allEvents])
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
+        try:
+            allEvents = Events.query.all()
+            return  jsonify([e.serialize() for e in allEvents])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+        except exceptions.NotFound:
+            raise exceptions.NotFound("User not found!")
+        except:
+            raise exceptions.InternalServerError()
     elif request.method == 'POST':
         try:
             req = request.get_json()
@@ -120,6 +124,11 @@ def getAllEvents():
             db.session.add(new_event)
             db.session.commit()
             return f"New Event was added!", 201
+        except exceptions.NotFound:
+            raise exceptions.NotFound("User not found!")
+        except:
+            raise exceptions.InternalServerError()
+
 
 
 
