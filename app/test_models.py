@@ -38,7 +38,6 @@ def test_new_match_with_fixture():
     THEN check the match, event, and user id are defined correctly
     """
 
-    match = Matches('1','2','3')
-    assert match.match_id == '1'
+    match = Matches('2','3')
     assert match.event_id == '2'
     assert match.user_id == '3'
