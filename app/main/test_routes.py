@@ -27,10 +27,28 @@ def test_get_oneuser(api):
     assert b'user_id' in app.get_data()
 
 
-def test_get_oneevent(api):
+def test_get_event(api):
     app = api.get('/events/1')
-    assert app.status == '200 OK'
+    assert app.status == '200 ok'
     assert b'event_id' in app.get_data()
+
+def test_delete_event(api):
+     app = api.delete('/events/1')
+     assert app.status == '204 NO CONTENT'
+     assert b'event_id' in app.get_data()
+
+def test_update_event(api):
+     app = api.patch('/events/1')
+     assert app.status == '201 created'
+     assert b'event_id' in app.get_data()
+
+
+
+   
+
+# def test_delete_cat(self, api):
+#         res = api.delete('/api/cats/1')
+#         assert res.status == '204 NO CONTENT'
 
 
 
