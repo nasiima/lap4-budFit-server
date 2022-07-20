@@ -173,33 +173,6 @@ def getEventsId(event_id):
             raise exceptions.InternalServerError()
 
 
-
-
-@cross_origin()
-@main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
-def getMatchesById(match_id):
-     if request.method == 'GET':
-        try: 
-            match = Matches.query.get_or_404(match_id)
-            return  jsonify([match.serialize()])
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            return response
-        except exceptions.NotFound:
-            raise exceptions.NotFound("Match not found!")
-        except:
-            raise exceptions.InternalServerError()
-    
-     elif request.method == 'DELETE':
-        try: 
-            match = Matches.query.get_or_404(match_id)
-            db.session.delete(match)
-            db.session.commit()
-            return f"Event was sucessfully deleted!", 204
-        except exceptions.NotFound:
-            raise exceptions.NotFound("Event not found!")
-        except:
-            raise exceptions.InternalServerError()
-
 # @main.route('/events/<int:event_id>/',  methods=['PATCH'])
 # def updateEvent(event_id):
 #     if request.method == 'PATCH':
@@ -229,12 +202,39 @@ def getMatchesById(match_id):
 
 # #  get all matches
 @cross_origin()
-@main.route('/matches', methods=['GET'])
+@main.route('/matches', methods=['GET', 'POST', 'OPTIONS'])
 def getAllMatches():
-    allMatches = Matches.query.all()
-    return  jsonify([e.serialize() for e in allMatches])
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    if request.method == 'GET':
+        try:
+            allMatches = Matches.query.all()
+            return  jsonify([e.serialize() for e in allMatches])
+        except:
+            raise exceptions.InternalServerError()
+        
+    elif request.method == 'POST':
+        try:
+            req = request.get_json()
+            print(req)
+            new_match = Matches(
+                user_id = req['user_id'],
+                event_id = req['event_id'],
+            )
+            db.session.add(new_match)
+            db.session.commit()
+            return f"New match was added!", 201
+        except:
+            raise exceptions.InternalServerError()
+            
+    elif request.method == 'OPTIONS':
+        try:
+            print('helllllo')
+            res = {
+                'body': "We've done it",
+                'headers':['Access-Control-Allow-Origin', '*']
+            }
+            return res
+        except:
+            raise exceptions.InternalServerError()
 
 
 # GET, DELETE matches by id
