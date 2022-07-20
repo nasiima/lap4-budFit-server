@@ -8,7 +8,7 @@ from app.extensions import db
 main = Blueprint('main', __name__) 
 CORS(main, resources={r"/*": {"origins": "*"}})
 
-main.config['CORS_HEADERS'] = 'Content-Type'
+# main.config['CORS_HEADERS'] = 'Content-Type'
 
 
 
