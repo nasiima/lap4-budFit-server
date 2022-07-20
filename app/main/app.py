@@ -238,30 +238,28 @@ def getAllMatches():
 
 
 # GET, DELETE matches by id
-# @cross_origin()
-# @main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
-# def getMatchesById(match_id):
-#      if request.method == 'GET':
-#         try: 
-#             match = Matches.query.get_or_404(match_id)
-#             response =  jsonify([match.serialize()])
-#             response.headers.add('Access-Control-Allow-Origin', '*')
-#             return response
-#         except exceptions.NotFound:
-#             raise exceptions.NotFound("Match not found!")
-#         except:
-#             raise exceptions.InternalServerError()
+@cross_origin()
+@main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
+def getMatchesById(match_id):
+     if request.method == 'GET':
+        try: 
+            match = Matches.query.get_or_404(match_id)
+            return jsonify([match.serialize()])
+        except exceptions.NotFound:
+            raise exceptions.NotFound("Match not found!")
+        except:
+            raise exceptions.InternalServerError()
     
-#      elif request.method == 'DELETE':
-#         try: 
-#             match = Matches.query.get_or_404(match_id)
-#             db.session.delete(match)
-#             db.session.commit()
-#             return f"Event was sucessfully deleted!", 204
-#         except exceptions.NotFound:
-#             raise exceptions.NotFound("Event not found!")
-#         except:
-#             raise exceptions.InternalServerError()
+     elif request.method == 'DELETE':
+        try: 
+            match = Matches.query.get_or_404(match_id)
+            db.session.delete(match)
+            db.session.commit()
+            return f"Event was sucessfully deleted!", 204
+        except exceptions.NotFound:
+            raise exceptions.NotFound("Event not found!")
+        except:
+            raise exceptions.InternalServerError()
 
 
 @main.errorhandler(exceptions.NotFound)
