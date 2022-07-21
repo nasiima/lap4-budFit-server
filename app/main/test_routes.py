@@ -20,7 +20,6 @@ def test_get_allEvents(api):
     assert b'event_id' in app.get_data()
 
 
-
 def test_get_oneuser(api):
     app = api.get('/users/1')
     assert app.status == '200 OK'
@@ -41,6 +40,13 @@ def test_update_event(api):
      app = api.patch('/events/1')
      assert app.status == '201 created'
      assert b'event_id' in app.get_data()
+
+
+def test_get_user_by_username(api):
+    app = api.get('/users/1')
+    assert app.status == '200 OK'
+    assert b'user_id' in app.get_data()
+
 
 
 
