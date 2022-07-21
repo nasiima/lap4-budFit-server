@@ -119,7 +119,7 @@ class Matches(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
 
-    def __init__(self, chat_id, messages):
+    def __init__(self, event_id, user_id):
         self.event_id = event_id
         self.user_id = user_id
 
