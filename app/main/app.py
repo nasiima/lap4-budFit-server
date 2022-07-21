@@ -246,7 +246,7 @@ def getMatchesById(match_id):
             match = Matches.query.get_or_404(match_id)
             db.session.delete(match)
             db.session.commit()
-            return f"Event was sucessfully deleted!", 204
+            return f"Match was sucessfully deleted!", 204
         except exceptions.NotFound:
             raise exceptions.NotFound("Event not found!")
         except:
