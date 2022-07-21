@@ -19,8 +19,6 @@ def hello():
 def getAllUsers():
     allUsers = Users.query.all()
     return  jsonify([e.serialize() for e in allUsers])
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
 
 
 # get  user by id and delete user by id
@@ -31,8 +29,6 @@ def getUserById(user_id):
         try: 
             user = Users.query.get_or_404(user_id)
             return  jsonify([user.serialize()])
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            return response
         except exceptions.NotFound:
             raise exceptions.NotFound("User not found!")
         except:
@@ -73,11 +69,11 @@ def getUserById(user_id):
             raise exceptions.NotFound("User not found!")
         except:
             raise exceptions.InternalServerError()
-            # return 'user by id'
+            
     elif request.method == 'OPTIONS':
         try:
             res = {
-                'body': "We've done it",
+                'body': "Options response",
                 'headers':['Access-Control-Allow-Origin', '*']
             }
             return res
@@ -93,8 +89,7 @@ def getUserByUsername(username):
         try: 
             user = Users.query.filter_by(username=username).first()
             return  jsonify([user.serialize()])
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            return response
+            
         except exceptions.NotFound:
             raise exceptions.NotFound("User not found!")
         except:
@@ -118,7 +113,6 @@ def getAllEvents():
     elif request.method == 'POST':
         try:
             req = request.get_json()
-            print(req)
             new_event = Events(
                 activity = req['activity'], 
                 title = req['title'],
@@ -136,9 +130,8 @@ def getAllEvents():
             raise exceptions.InternalServerError()
     elif request.method == 'OPTIONS':
         try:
-            print('helllllo')
             res = {
-                'body': "We've done it",
+                'body': "Options response",
                 'headers':['Access-Control-Allow-Origin', '*']
             }
             return res
@@ -214,7 +207,6 @@ def getAllMatches():
     elif request.method == 'POST':
         try:
             req = request.get_json()
-            print(req)
             new_match = Matches(
                 user_id = req['user_id'],
                 event_id = req['event_id'],
@@ -227,9 +219,8 @@ def getAllMatches():
             
     elif request.method == 'OPTIONS':
         try:
-            print('helllllo')
             res = {
-                'body': "We've done it",
+                'body': "Options response",
                 'headers':['Access-Control-Allow-Origin', '*']
             }
             return res
@@ -239,9 +230,9 @@ def getAllMatches():
 
 # GET, DELETE matches by id
 @cross_origin()
-@main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE'])
+@main.route('/matches/<int:match_id>/',methods=['GET', 'DELETE', 'OPTIONS'])
 def getMatchesById(match_id):
-     if request.method == 'GET':
+    if request.method == 'GET':
         try: 
             match = Matches.query.get_or_404(match_id)
             return jsonify([match.serialize()])
@@ -250,7 +241,7 @@ def getMatchesById(match_id):
         except:
             raise exceptions.InternalServerError()
     
-     elif request.method == 'DELETE':
+    elif request.method == 'DELETE':
         try: 
             match = Matches.query.get_or_404(match_id)
             db.session.delete(match)
@@ -258,6 +249,16 @@ def getMatchesById(match_id):
             return f"Event was sucessfully deleted!", 204
         except exceptions.NotFound:
             raise exceptions.NotFound("Event not found!")
+        except:
+            raise exceptions.InternalServerError()
+
+    elif request.method == 'OPTIONS':
+        try:
+            res = {
+                'body': "Options response",
+                'headers':['Access-Control-Allow-Origin', '*']
+            }
+            return res
         except:
             raise exceptions.InternalServerError()
 
