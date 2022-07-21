@@ -11,7 +11,7 @@ class Users(db.Model):
     name = db.Column(db.String(64))
     username = db.Column(db.String(100), unique=True)
     email = db.Column(db.String(100))
-    dob = db.Column(db.Float)
+    dob = db.Column(db.Date)
     password_digest = db.Column(db.String(10000))
     preferences =  db.Column(db.String(140))
     picture = db.Column(db.String(10000))
